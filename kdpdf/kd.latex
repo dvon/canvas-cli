@@ -1,0 +1,92 @@
+<%
+encmap = {
+  'UTF-8' => 'utf8x',
+  'US-ASCII' => 'ascii',
+  'ISO-8859-1' => 'latin1',
+  'ISO-8859-2' => 'latin2',
+  'ISO-8859-3' => 'latin3',
+  'ISO-8859-4' => 'latin4',
+  'ISO-8859-5' => 'latin5',
+  'ISO-8859-9' => 'latin9',
+  'ISO-8859-10' => 'latin10',
+  'CP850' => 'cp850',
+  'CP852' => 'cp852',
+  'CP858' => 'cp858',
+  'CP437' => 'cp437',
+  'CP865' => 'cp865',
+  'CP1250' => 'cp120',
+  'CP1252' => 'cp1252',
+  'CP1257' => 'cp1257'
+}
+%>
+\documentclass[paper=letter,DIV=16,parskip=half-]{scrartcl}
+<% if RUBY_VERSION >= '1.9' %>
+\usepackage[<%= encmap[@body.encoding.name] %>]{inputenc}
+<% else %>
+\usepackage[mathletters]{ucs}
+\usepackage[utf8x]{inputenc}
+<% end %>
+\usepackage[T1]{fontenc}
+\usepackage{listings}
+<% @converter.data[:packages].each {|pkg| %>\usepackage{<%= pkg %>}
+<% } %>
+\usepackage{hyperref}
+<% if @converter.data[:packages].include?('fancyvrb') %>
+\VerbatimFootnotes
+<% end %>
+
+<% if @converter.data[:packages].include?('acronym') %>
+<%   @converter.root.options[:abbrev_defs].each_pair do |k,v| %>\acrodef{<%= @converter.normalize_abbreviation_key(k) %>}[<%= k %>]{<%= @converter.escape(v) %>}
+<%   end %>
+<% end %>
+
+\setcounter{footnote}{<%= @converter.options[:footnote_nr] - 1 %>}
+\hypersetup{colorlinks=true,urlcolor=blue,pdfpagemode=UseNone}
+
+\raggedright
+
+% Circles for 2nd level bullets.
+\renewcommand*{\labelitemii}{\(\bullet\)}
+
+% Different fonts.
+\usepackage{fourier}
+\usepackage[scaled=0.8]{DejaVuSansMono}
+% \usepackage[scaled=0.9,semibold]{sourcecodepro}
+\renewcommand*{\UrlFont}{\normalfont}
+
+% Control ellipsis spacing
+\usepackage{ellipsis}
+\renewcommand*{\ellipsisgap}{0em}
+
+% \nameblank (for quizzes, tests; works in title line).
+\newcommand*{\nameblank}{\small\textmd {Name:} {\underline {\hspace{2in}}}}
+
+% For landscape diffs etc.
+\usepackage{pdflscape}
+\newcommand*{\blandscape}{\begin{landscape}}  % stackoverflow 25849814
+\newcommand*{\elandscape}{\end{landscape}}
+
+% No figure labels (from https://gist.github.com/rwst/1366514).
+\usepackage{caption}
+\DeclareCaptionLabelFormat{nolabel}{}
+\captionsetup{labelformat=nolabel}
+
+% No section numbers.
+\renewcommand*{\sectionformat}{}
+\renewcommand*{\subsectionformat}{}
+\renewcommand*{\subsubsectionformat}{}
+
+% Make section title fonts match normal text.
+\setkomafont{section}{\normalfont\bfseries\LARGE}
+\setkomafont{subsection}{\normalfont\bfseries\Large}
+\setkomafont{subsubsection}{\normalfont\bfseries\large}
+
+% Hide page numbers.
+\pagestyle{empty}
+
+% Fix \LTleft errors.
+\usepackage{longtable}
+
+\begin{document}
+<%= @body %>
+\end{document}

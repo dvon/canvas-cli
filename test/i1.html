@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="cis-287-first-individual-programming-assignment">CIS 287 — First Individual Programming Assignment</h2>
+<h4 id="part-1">Part 1</h4>
+<p>Go to <a href="https://processing.org" class="uri">https://processing.org</a> and download the latest version (2.2.1 as of January 2015) of Processing appropriate for your operating system. Unzip it, navigate to the executable (the file with the Processing icon), and enter the program below.</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span><span style="color: #008000">ellipse</span><span style="color: #666666">(25,</span> <span style="color: #666666">75,</span> <span style="color: #666666">15,</span> <span style="color: #666666">25);</span>
+</pre>
+</div>
+<p>Run the program by pushing the “play button” at the top of the window. Assuming it works, can you figure out the significance of the four numbers? (Make changes and see what happens.) How wide is the window? How tall? Where is (0, 0)?</p>
+<p>Now try this:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span><span style="color: #008000">size</span><span style="color: #666666">(320,</span> <span style="color: #666666">240);</span>
+<span style="color: #008000">fill</span><span style="color: #666666">(0);</span>
+<span style="color: #008000">rectMode</span><span style="color: #666666">(</span><span style="color: #880000">CENTER</span><span style="color: #666666">);</span>
+<span style="color: #008000">rect</span><span style="color: #666666">(</span><span style="color: #19177C">width</span> <span style="color: #666666">/</span> <span style="color: #666666">2,</span> <span style="color: #19177C">height</span> <span style="color: #666666">/</span> <span style="color: #666666">2,</span> <span style="color: #666666">40,</span> <span style="color: #666666">50);</span>
+<span style="color: #008000">fill</span><span style="color: #666666">(255);</span>
+<span style="color: #008000">ellipseMode</span><span style="color: #666666">(</span><span style="color: #880000">RADIUS</span><span style="color: #666666">);</span>
+<span style="color: #008000">ellipse</span><span style="color: #666666">(</span><span style="color: #19177C">width</span> <span style="color: #666666">/</span> <span style="color: #666666">2,</span> <span style="color: #19177C">height</span> <span style="color: #666666">/</span> <span style="color: #666666">2,</span> <span style="color: #666666">20,</span> <span style="color: #666666">25);</span>
+</pre>
+</div>
+<p>Does what you see make sense to you? You can look up Processing’s built-in functions, global variables (e.g., <span class="code" style="font-family:monospace;">width</span>), and constants here: <a href="https://processing.org/reference/" class="uri">https://processing.org/reference/</a>.</p>
+<p>What’s the difference between <span class="code" style="font-family:monospace;">fill(0);</span> and <span class="code" style="font-family:monospace;">fill(255);</span>? What happens if you comment out (with <span class="code" style="font-family:monospace;">//</span>) the line <span class="code" style="font-family:monospace;">rectMode(CENTER);</span>? What happens if you comment out <span class="code" style="font-family:monospace;">ellipseMode(RADIUS);</span>?</p>
+<p>Try to make a snowman that looks like this:</p>
+<figure>
+<img src="snowman.png" title="A Snowman" />
+</figure>
+<p>If you want to add arms and a mouth, look up <span class="code" style="font-family:monospace;">line</span> and <span class="code" style="font-family:monospace;">arc</span> in the Processing documentation. Save your program as “Snowman” (Snowman.pde). You’ll submit this as the first part of the assignment.</p>
+<h4 id="part-2">Part 2</h4>
+<p>Open a new window; enter and run this program:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span><span style="color: #B00040">void</span> <span style="color: #0000FF">setup</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+  <span style="color: #008000">size</span><span style="color: #666666">(320,</span> <span style="color: #666666">240);</span>
+  <span style="color: #008000">background</span><span style="color: #666666">(255);</span>
+<span style="color: #666666">}</span>
+
+<span style="color: #B00040">void</span> <span style="color: #0000FF">draw</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+  <span style="color: #008000">fill</span><span style="color: #666666">(</span><span style="color: #19177C">mouseY</span><span style="color: #666666">,</span> <span style="color: #666666">20,</span> <span style="color: #666666">20);</span>
+  <span style="color: #008000">ellipse</span><span style="color: #666666">(</span><span style="color: #19177C">mouseX</span><span style="color: #666666">,</span> <span style="color: #19177C">height</span> <span style="color: #666666">/</span> <span style="color: #666666">2,</span> <span style="color: #666666">100,</span> <span style="color: #666666">100);</span>
+<span style="color: #666666">}</span>
+</pre>
+</div>
+<p><span class="code" style="font-family:monospace;">setup</span> and <span class="code" style="font-family:monospace;">draw</span> are special functions, called automatically by the Processing interpreter (assuming you’ve defined them). When are they called? (Hint: Try moving <span class="code" style="font-family:monospace;">background(255);</span> from <span class="code" style="font-family:monospace;">setup</span> to <span class="code" style="font-family:monospace;">draw</span> and see what happens.) Also notice that <span class="code" style="font-family:monospace;">fill</span> is called with three arguments—the red, green and blue components of a color. What is the minimum value that works? The maximum?</p>
+<p>Modify your program to make it a liitle more interesting:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span><span style="color: #B00040">int</span> oldX<span style="color: #666666">,</span> oldY<span style="color: #666666">;</span>
+
+<span style="color: #B00040">void</span> <span style="color: #0000FF">setup</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+  <span style="color: #008000">size</span><span style="color: #666666">(320,</span> <span style="color: #666666">240);</span>
+  <span style="color: #008000">background</span><span style="color: #666666">(255);</span>
+  oldX <span style="color: #666666">=</span> <span style="color: #19177C">mouseX</span><span style="color: #666666">;</span>
+  oldY <span style="color: #666666">=</span> <span style="color: #19177C">mouseY</span><span style="color: #666666">;</span>
+<span style="color: #666666">}</span>
+
+<span style="color: #B00040">void</span> <span style="color: #0000FF">draw</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+  <span style="color: #008000">fill</span><span style="color: #666666">(</span><span style="color: #19177C">mouseY</span><span style="color: #666666">,</span> <span style="color: #008000">min</span><span style="color: #666666">(</span><span style="color: #19177C">mouseX</span><span style="color: #666666">,</span> <span style="color: #666666">255),</span> <span style="color: #666666">-</span><span style="color: #19177C">mouseY</span><span style="color: #666666">);</span>
+  <span style="color: #008000">ellipse</span><span style="color: #666666">(</span>oldX<span style="color: #666666">,</span> oldY<span style="color: #666666">,</span> <span style="color: #666666">40,</span> <span style="color: #666666">40);</span>
+  oldX <span style="color: #666666">=</span> <span style="color: #666666">(</span>oldX <span style="color: #666666">*</span> <span style="color: #666666">9</span> <span style="color: #666666">+</span> <span style="color: #19177C">mouseX</span><span style="color: #666666">)</span> <span style="color: #666666">/</span> <span style="color: #666666">10;</span>
+  oldY <span style="color: #666666">=</span> <span style="color: #666666">(</span>oldY <span style="color: #666666">*</span> <span style="color: #666666">9</span> <span style="color: #666666">+</span> <span style="color: #19177C">mouseY</span><span style="color: #666666">)</span> <span style="color: #666666">/</span> <span style="color: #666666">10;</span>
+<span style="color: #666666">}</span>
+</pre>
+</div>
+<p>Run the program. Do you understand how it works? Experiment with the code, making changes to lines you aren’t sure about, and see what happens.</p>
+<p>Hint: The modified version of <span class="code" style="font-family:monospace;">draw</span> below shows more clearly that <span class="code" style="font-family:monospace;">oldX</span>’s new value is based on a weighted average of its old value and the value of <span class="code" style="font-family:monospace;">mouseX</span>. (Same idea with <span class="code" style="font-family:monospace;">oldY</span>.)</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span><span style="color: #B00040">void</span> <span style="color: #0000FF">draw</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+  <span style="color: #008000">fill</span><span style="color: #666666">(</span><span style="color: #19177C">mouseY</span><span style="color: #666666">,</span> <span style="color: #008000">min</span><span style="color: #666666">(</span><span style="color: #19177C">mouseX</span><span style="color: #666666">,</span> <span style="color: #666666">255),</span> <span style="color: #666666">-</span><span style="color: #19177C">mouseY</span><span style="color: #666666">);</span>
+  <span style="color: #008000">ellipse</span><span style="color: #666666">(</span>oldX<span style="color: #666666">,</span> oldY<span style="color: #666666">,</span> <span style="color: #666666">40,</span> <span style="color: #666666">40);</span>
+
+  <span style="color: #B00040">int</span> oldWeight <span style="color: #666666">=</span> <span style="color: #666666">9;</span>
+  <span style="color: #B00040">int</span> newWeight <span style="color: #666666">=</span> <span style="color: #666666">1;</span>
+
+  oldX <span style="color: #666666">=</span> <span style="color: #666666">(</span>oldX <span style="color: #666666">*</span> oldWeight <span style="color: #666666">+</span> <span style="color: #19177C">mouseX</span> <span style="color: #666666">*</span> newWeight<span style="color: #666666">)</span> <span style="color: #666666">/</span>
+      <span style="color: #666666">(</span>oldWeight <span style="color: #666666">+</span> newWeight<span style="color: #666666">);</span>
+  oldY <span style="color: #666666">=</span> <span style="color: #666666">(</span>oldY <span style="color: #666666">*</span> oldWeight <span style="color: #666666">+</span> <span style="color: #19177C">mouseY</span> <span style="color: #666666">*</span> newWeight<span style="color: #666666">)</span> <span style="color: #666666">/</span>
+      <span style="color: #666666">(</span>oldWeight <span style="color: #666666">+</span> newWeight<span style="color: #666666">);</span>
+<span style="color: #666666">}</span>
+</pre>
+</div>
+<p>When you feel confident that you understand this program as it is, modify it to make your own interesting interactive design. Be creative! Save your program as “Circles” (hopefully that name will still make sense); you’ll submit it for part 2 of this assignment.</p>
+<h4 id="part-3">Part 3</h4>
+<p>The next program introduces <span class="code" style="font-family:monospace;">translate</span> and <span class="code" style="font-family:monospace;">scale</span>, tools for changing the coordinate system to make it suit the program you’re working on.</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span><span style="color: #B00040">void</span> <span style="color: #0000FF">setup</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+  <span style="color: #008000">size</span><span style="color: #666666">(512,</span> <span style="color: #666666">512);</span>
+  <span style="color: #008000">strokeWeight</span><span style="color: #666666">(0.5);</span>
+<span style="color: #666666">}</span>
+
+<span style="color: #B00040">void</span> <span style="color: #0000FF">draw</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+  <span style="color: #008000">background</span><span style="color: #666666">(0);</span>
+
+  <span style="color: #008000">translate</span><span style="color: #666666">(</span><span style="color: #19177C">mouseX</span><span style="color: #666666">,</span> <span style="color: #19177C">mouseY</span><span style="color: #666666">);</span>
+  <span style="color: #008000">scale</span><span style="color: #666666">(</span><span style="color: #19177C">width</span> <span style="color: #666666">/</span> <span style="color: #666666">10,</span> <span style="color: #666666">-</span><span style="color: #19177C">width</span> <span style="color: #666666">/</span> <span style="color: #666666">10);</span>
+
+  <span style="color: #008000">stroke</span><span style="color: #666666">(240,</span> <span style="color: #666666">40,</span> <span style="color: #666666">40);</span>
+  <span style="color: #008000">line</span><span style="color: #666666">(0,</span> <span style="color: #666666">0,</span> <span style="color: #666666">1,</span> <span style="color: #666666">1);</span>
+  
+  <span style="color: #008000">stroke</span><span style="color: #666666">(240,</span> <span style="color: #666666">160,</span> <span style="color: #666666">40);</span>
+  <span style="color: #008000">line</span><span style="color: #666666">(0,</span> <span style="color: #666666">0,</span> <span style="color: #666666">1,</span> <span style="color: #666666">-1);</span>
+  
+  <span style="color: #008000">stroke</span><span style="color: #666666">(240,</span> <span style="color: #666666">240,</span> <span style="color: #666666">40);</span>
+  <span style="color: #008000">line</span><span style="color: #666666">(0,</span> <span style="color: #666666">0,</span> <span style="color: #666666">-1,</span> <span style="color: #666666">-1);</span>
+  
+  <span style="color: #008000">stroke</span><span style="color: #666666">(80,</span> <span style="color: #666666">220,</span> <span style="color: #666666">40);</span>
+  <span style="color: #008000">line</span><span style="color: #666666">(0,</span> <span style="color: #666666">0,</span> <span style="color: #666666">-1,</span> <span style="color: #666666">1);</span>
+<span style="color: #666666">}</span>
+</pre>
+</div>
+<p>Notice that all four lines begin at (0, 0), but the location of (0, 0), changes as the mouse moves. Which line changes it? Also notice that the negative y direction in this program is down, not up (as it was in the last two programs). Can you figure out how to change it back, so that the negative y direction is up? Experiment with the calls to <span class="code" style="font-family:monospace;">translate</span> and <span class="code" style="font-family:monospace;">scale</span>, changing the values, predicting the effect of the change, and then running the program to see if your prediction was correct.</p>
+<p>Once you understand how <span class="code" style="font-family:monospace;">translate</span> and <span class="code" style="font-family:monospace;">scale</span> work, use them to make a new version of your snowman program, in which the snowman follows the mouse around the window. Save your program as “MovingSnowman” and submit it for part 3 of this assignment.</p>
+<h4 id="part-4">Part 4</h4>
+<p>Next, try this program. You don’t need to retype all of the comments I’ve used to explain the details, but you should type the Processing statements (rather than copy / pasting) and try to understand what each one does, even if you aren’t sure yet how that statement fits into the overall program.</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span><span style="color: #B00040">float</span> angle <span style="color: #666666">=</span> <span style="color: #666666">0;</span>  <span style="color: #408080; font-style: italic">// angle will be a floating-point (not an</span>
+                  <span style="color: #408080; font-style: italic">// integer) variable.</span>
+<span style="color: #B00040">void</span> <span style="color: #0000FF">setup</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+  <span style="color: #008000">size</span><span style="color: #666666">(640,</span> <span style="color: #666666">480);</span>
+  <span style="color: #008000">strokeWeight</span><span style="color: #666666">(0.01);</span>
+  <span style="color: #008000">noLoop</span><span style="color: #666666">();</span>  <span style="color: #408080; font-style: italic">// draw will be called once, rather than</span>
+             <span style="color: #408080; font-style: italic">// being called again and again automatically.</span>
+             <span style="color: #408080; font-style: italic">// If the scene should be redrawn, the redraw</span>
+             <span style="color: #408080; font-style: italic">// function should be called.</span>
+<span style="color: #666666">}</span>
+
+<span style="color: #B00040">void</span> <span style="color: #0000FF">draw</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+  <span style="color: #008000">background</span><span style="color: #666666">(0);</span>
+  <span style="color: #B00040">int</span> r <span style="color: #666666">=</span> <span style="color: #008000">int</span><span style="color: #666666">(</span><span style="color: #008000">random</span><span style="color: #666666">(0,</span> <span style="color: #666666">256));</span>  <span style="color: #408080; font-style: italic">// random will return a float</span>
+                                <span style="color: #408080; font-style: italic">// value between 0 and 256</span>
+                                <span style="color: #408080; font-style: italic">// (including 0 through 255 as</span>
+                                <span style="color: #408080; font-style: italic">// possibilities).  stroke needs</span>
+                                <span style="color: #408080; font-style: italic">// an int value; the int function</span>
+                                <span style="color: #408080; font-style: italic">// is used to convert it from</span>
+                                <span style="color: #408080; font-style: italic">// float to int. </span>
+  <span style="color: #008000">stroke</span><span style="color: #666666">(</span>r<span style="color: #666666">);</span>
+
+  <span style="color: #008000">translate</span><span style="color: #666666">(</span><span style="color: #19177C">width</span> <span style="color: #666666">/</span> <span style="color: #666666">2,</span> <span style="color: #19177C">height</span> <span style="color: #666666">/</span> <span style="color: #666666">2);</span>
+  <span style="color: #008000">scale</span><span style="color: #666666">(</span><span style="color: #19177C">width</span> <span style="color: #666666">/</span> <span style="color: #666666">4,</span> <span style="color: #666666">-</span><span style="color: #19177C">width</span> <span style="color: #666666">/</span> <span style="color: #666666">4);</span>
+  
+  <span style="color: #008000">rotate</span><span style="color: #666666">(</span>angle<span style="color: #666666">);</span>  <span style="color: #408080; font-style: italic">// Like translate and scale, rotate can be</span>
+                  <span style="color: #408080; font-style: italic">// used to change the coordinate system. A</span>
+                  <span style="color: #408080; font-style: italic">// positive angle rotates the x and y axes</span>
+                  <span style="color: #408080; font-style: italic">// counterclockwise.</span>
+
+  <span style="color: #008000">line</span><span style="color: #666666">(-1,</span> <span style="color: #666666">-1,</span> <span style="color: #666666">1,</span> <span style="color: #666666">1);</span>
+  <span style="color: #008000">rotate</span><span style="color: #666666">(</span>angle <span style="color: #666666">*</span> <span style="color: #666666">2);</span>
+  <span style="color: #008000">line</span><span style="color: #666666">(-1.0</span> <span style="color: #666666">/</span> <span style="color: #666666">2,</span> <span style="color: #666666">-1.0</span> <span style="color: #666666">/</span> <span style="color: #666666">2,</span> <span style="color: #666666">1.0</span> <span style="color: #666666">/</span> <span style="color: #666666">2,</span> <span style="color: #666666">1.0</span> <span style="color: #666666">/</span> <span style="color: #666666">2);</span>  <span style="color: #408080; font-style: italic">// 1.0, not 1, used</span>
+                                               <span style="color: #408080; font-style: italic">// to get floating-</span>
+                                               <span style="color: #408080; font-style: italic">// point, not integer</span>
+                                               <span style="color: #408080; font-style: italic">// division.</span>
+  <span style="color: #008000">rotate</span><span style="color: #666666">(</span>angle <span style="color: #666666">*</span> <span style="color: #666666">3);</span>
+  <span style="color: #008000">line</span><span style="color: #666666">(-1.0</span> <span style="color: #666666">/</span> <span style="color: #666666">3,</span> <span style="color: #666666">-1.0</span> <span style="color: #666666">/</span> <span style="color: #666666">3,</span> <span style="color: #666666">1.0</span> <span style="color: #666666">/</span> <span style="color: #666666">3,</span> <span style="color: #666666">1.0</span> <span style="color: #666666">/</span> <span style="color: #666666">3);</span>
+<span style="color: #666666">}</span>
+
+<span style="color: #B00040">void</span> <span style="color: #0000FF">keyPressed</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+
+  <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span><span style="color: #19177C">keyCode</span> <span style="color: #666666">==</span> UP<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+    angle <span style="color: #666666">+=</span> <span style="color: #666666">0.1;</span>  <span style="color: #408080; font-style: italic">// Equivalent to:  angle = angle + 0.1;</span>
+
+    <span style="color: #008000">redraw</span><span style="color: #666666">();</span>  <span style="color: #408080; font-style: italic">// Proper way to get the code in draw to run</span>
+               <span style="color: #408080; font-style: italic">// again when noLoop has been used to turn off</span>
+               <span style="color: #408080; font-style: italic">// repeated calls to draw. (draw shouldn&#39;t be</span>
+               <span style="color: #408080; font-style: italic">// called directly.)</span>
+  
+  <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span><span style="color: #19177C">keyCode</span> <span style="color: #666666">==</span> DOWN<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+    angle <span style="color: #666666">-=</span> <span style="color: #666666">0.1;</span>  <span style="color: #408080; font-style: italic">// Equivalent to:  angle = angle - 0.1;</span>
+    <span style="color: #008000">redraw</span><span style="color: #666666">();</span>
+  <span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
+</pre>
+</div>
+<p>Run the program to see what it does. (Hold down the up arrow key for a while, then hold down the down arrow key for a while…) Now reread the program, thinking about how each statement fits into the overall program. Is it clear to you when <span class="code" style="font-family:monospace;">setup</span>, <span class="code" style="font-family:monospace;">draw</span> and <span class="code" style="font-family:monospace;">keyPressed</span> are being called? Experiment with different colors, line widths, and angle changes. Each time you make a change, predict what the result of the change will be. Then run the program to see if your prediction was correct.</p>
+<p>Wouldn’t it be cool if there were an easy way to make more than three lines? There is! You can use a loop:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span><span style="color: #008000; font-weight: bold">for</span> <span style="color: #666666">(</span><span style="color: #B00040">int</span> i <span style="color: #666666">=</span> <span style="color: #666666">1;</span> i <span style="color: #666666">&lt;=</span> <span style="color: #666666">10;</span> i<span style="color: #666666">++)</span> <span style="color: #666666">{</span>
+  <span style="color: #008000">rotate</span><span style="color: #666666">(</span>angle <span style="color: #666666">*</span> i<span style="color: #666666">);</span>
+  <span style="color: #008000">line</span><span style="color: #666666">(-1.0</span> <span style="color: #666666">/</span> i<span style="color: #666666">,</span> <span style="color: #666666">-1.0</span> <span style="color: #666666">/</span> i<span style="color: #666666">,</span> <span style="color: #666666">1.0</span> <span style="color: #666666">/</span> i<span style="color: #666666">,</span> <span style="color: #666666">1.0</span> <span style="color: #666666">/</span> i<span style="color: #666666">);</span>
+<span style="color: #666666">}</span>
+</pre>
+</div>
+<p>The first time through the loop, <span class="code" style="font-family:monospace;">i</span> is 1; after each iteration the value of <span class="code" style="font-family:monospace;">i</span> is increased by 1. (That’s what <span class="code" style="font-family:monospace;">i++</span> means—increase the value of <span class="code" style="font-family:monospace;">i</span> by 1.) The loop continues until the condition <span class="code" style="font-family:monospace;">i &lt;= 10</span> becomes false. So the code inside the loop runs 10 times, with the values 1, 2, 3, 4, 5, 6, 7, 8, 9 and 10 assigned to <span class="code" style="font-family:monospace;">i</span>.</p>
+<p>Try adding a function called <span class="code" style="font-family:monospace;">drawStar</span> with the loop…</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span><span style="color: #B00040">void</span> <span style="color: #0000FF">drawStar</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+
+  <span style="color: #008000; font-weight: bold">for</span> <span style="color: #666666">(</span><span style="color: #B00040">int</span> i <span style="color: #666666">=</span> <span style="color: #666666">1;</span> i <span style="color: #666666">&lt;=</span> <span style="color: #666666">10;</span> i<span style="color: #666666">++)</span> <span style="color: #666666">{</span>
+    <span style="color: #008000">rotate</span><span style="color: #666666">(</span>angle <span style="color: #666666">*</span> i<span style="color: #666666">);</span>
+    <span style="color: #008000">line</span><span style="color: #666666">(-1.0</span> <span style="color: #666666">/</span> i<span style="color: #666666">,</span> <span style="color: #666666">-1.0</span> <span style="color: #666666">/</span> i<span style="color: #666666">,</span> <span style="color: #666666">1.0</span> <span style="color: #666666">/</span> i<span style="color: #666666">,</span> <span style="color: #666666">1.0</span> <span style="color: #666666">/</span> i<span style="color: #666666">);</span>
+  <span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
+</pre>
+</div>
+<p>…now add statements to call <span class="code" style="font-family:monospace;">drawStar</span> from <span class="code" style="font-family:monospace;">draw</span>, use <span class="code" style="font-family:monospace;">translate</span> and <span class="code" style="font-family:monospace;">scale</span> to change the coordinate system, and then call <span class="code" style="font-family:monospace;">drawStar</span> again (to get a second star in a different place):</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span><span style="color: #B00040">void</span> <span style="color: #0000FF">draw</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+  <span style="color: #008000">background</span><span style="color: #666666">(0);</span>
+  <span style="color: #B00040">int</span> r <span style="color: #666666">=</span> <span style="color: #008000">int</span><span style="color: #666666">(</span><span style="color: #008000">random</span><span style="color: #666666">(0,</span> <span style="color: #666666">256));</span>
+  <span style="color: #008000">stroke</span><span style="color: #666666">(</span>r<span style="color: #666666">);</span>
+  
+  <span style="color: #008000">translate</span><span style="color: #666666">(</span><span style="color: #19177C">width</span> <span style="color: #666666">/</span> <span style="color: #666666">2,</span> <span style="color: #19177C">height</span> <span style="color: #666666">/</span> <span style="color: #666666">2);</span>
+  <span style="color: #008000">scale</span><span style="color: #666666">(</span><span style="color: #19177C">width</span> <span style="color: #666666">/</span> <span style="color: #666666">4,</span> <span style="color: #666666">-</span><span style="color: #19177C">width</span> <span style="color: #666666">/</span> <span style="color: #666666">4);</span>
+  
+  drawStar<span style="color: #666666">();</span>  <span style="color: #408080; font-style: italic">// Original star in the center.</span>
+
+  <span style="color: #008000">translate</span><span style="color: #666666">(-1,</span> <span style="color: #666666">0);</span>  <span style="color: #408080; font-style: italic">// Move origin one unit left.</span>
+
+  <span style="color: #008000">scale</span><span style="color: #666666">(0.5,</span> <span style="color: #666666">0.5);</span>  <span style="color: #408080; font-style: italic">// Make everything 1/2 the size.</span>
+
+  drawStar<span style="color: #666666">();</span>  <span style="color: #408080; font-style: italic">// Draw a 1/2 size star one unit left</span>
+               <span style="color: #408080; font-style: italic">// of the original.</span>
+<span style="color: #666666">}</span>
+</pre>
+</div>
+<p>At first it probably looks the way you expect it to, but try hitting the up or down arrow keys. It’s cool! But it’s not what you’d expect. Why is the second star orbiting around the first? It’s because the rotations in the first call to <span class="code" style="font-family:monospace;">drawStar</span> change the effect of <span class="code" style="font-family:monospace;">translate(-1, 0);</span>—the coordinate system is getting rotated, so the negative x direction is changing before <span class="code" style="font-family:monospace;">translate</span> is called. (Why wasn’t this a problem until now? Because the coordinate system is reset automatically before each time <span class="code" style="font-family:monospace;">draw</span> runs.)</p>
+<p>Wouldn’t it be cool if there were an easy way to reset the coordinate system to what it was before all those rotations? There is! Use the <span class="code" style="font-family:monospace;">pushMatrix</span> function to save a copy of the current coordinate system. (“Push” because you are putting the copy on the top of a “stack” data structure; “matrix” because <span class="code" style="font-family:monospace;">translate</span>, <span class="code" style="font-family:monospace;">scale</span> and <span class="code" style="font-family:monospace;">rotate</span> are implemented with matrix multiplication—but you don’t really need to understand how it all works to use them.) …And use <span class="code" style="font-family:monospace;">popMatrix</span> to restore the coordinate system to whatever it was the last time you called <span class="code" style="font-family:monospace;">pushMatrix</span>:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span><span style="color: #408080; font-style: italic">// STOP!  Did you get lost in the previous two paragraphs and</span>
+<span style="color: #408080; font-style: italic">// skim down to this code snippet?  Go back and read...make</span>
+<span style="color: #408080; font-style: italic">// sure you understand what&#39;s going on here!  :)</span>
+
+<span style="color: #B00040">void</span> <span style="color: #0000FF">drawStar</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+  <span style="color: #008000">pushMatrix</span><span style="color: #666666">();</span>  <span style="color: #408080; font-style: italic">// Save a copy of the coordinate system,</span>
+                 <span style="color: #408080; font-style: italic">// whatever it was right when the function was</span>
+                 <span style="color: #408080; font-style: italic">// called.</span>
+
+  <span style="color: #008000; font-weight: bold">for</span> <span style="color: #666666">(</span><span style="color: #B00040">int</span> i <span style="color: #666666">=</span> <span style="color: #666666">1;</span> i <span style="color: #666666">&lt;=</span> <span style="color: #666666">10;</span> i<span style="color: #666666">++)</span> <span style="color: #666666">{</span>
+    <span style="color: #008000">rotate</span><span style="color: #666666">(</span>angle <span style="color: #666666">*</span> i<span style="color: #666666">);</span>
+    <span style="color: #008000">line</span><span style="color: #666666">(-1.0</span> <span style="color: #666666">/</span> i<span style="color: #666666">,</span> <span style="color: #666666">-1.0</span> <span style="color: #666666">/</span> i<span style="color: #666666">,</span> <span style="color: #666666">1.0</span> <span style="color: #666666">/</span> i<span style="color: #666666">,</span> <span style="color: #666666">1.0</span> <span style="color: #666666">/</span> i<span style="color: #666666">);</span>
+  <span style="color: #666666">}</span>
+
+  <span style="color: #008000">popMatrix</span><span style="color: #666666">();</span>  <span style="color: #408080; font-style: italic">// Restore the coordinate system to what it was</span>
+                <span style="color: #408080; font-style: italic">// when pushMatrix was called at the beginning</span>
+                <span style="color: #408080; font-style: italic">// of this function.</span>
+<span style="color: #666666">}</span>
+</pre>
+</div>
+<p>Based on what you’ve read, and what you see in these examples, modify your program so that it puts two spinning stars side-by-side in the window. Make them spin in opposite directions. (Can you figure out a way to do it without changing the <span class="code" style="font-family:monospace;">drawStar</span> function?) Call your program “SpinningStars” and submit it for part 4 of this assignment.</p>
+<h4 id="part-5">Part 5</h4>
+<p>Another program for you to enter and run…this one introduces <em>arrays</em>—special variables that provide a way to access multiple related values of the same type (via just one variable).</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span><span style="color: #B00040">int</span><span style="color: #666666">[]</span> intArray<span style="color: #666666">;</span>  <span style="color: #408080; font-style: italic">// Declare the array variable.</span>
+
+<span style="color: #B00040">void</span> <span style="color: #0000FF">setup</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+  intArray <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> <span style="color: #B00040">int</span><span style="color: #666666">[5];</span>  <span style="color: #408080; font-style: italic">// Create an array and assign it to</span>
+                          <span style="color: #408080; font-style: italic">// the array variable.</span>
+
+  <span style="color: #008000; font-weight: bold">for</span> <span style="color: #666666">(</span><span style="color: #B00040">int</span> i <span style="color: #666666">=</span> <span style="color: #666666">0;</span> i <span style="color: #666666">&lt;</span> <span style="color: #666666">5;</span> i<span style="color: #666666">++)</span> <span style="color: #666666">{</span>  <span style="color: #408080; font-style: italic">// Assign values to the elements</span>
+    intArray<span style="color: #666666">[</span>i<span style="color: #666666">]</span> <span style="color: #666666">=</span> <span style="color: #666666">0;</span>             <span style="color: #408080; font-style: italic">// of the array.</span>
+  <span style="color: #666666">}</span>
+
+  <span style="color: #008000">size</span><span style="color: #666666">(700,</span> <span style="color: #666666">300);</span>
+  <span style="color: #008000">strokeWeight</span><span style="color: #666666">(0.1);</span>
+  <span style="color: #008000">ellipseMode</span><span style="color: #666666">(</span><span style="color: #880000">RADIUS</span><span style="color: #666666">);</span>
+  <span style="color: #008000">noLoop</span><span style="color: #666666">();</span>
+<span style="color: #666666">}</span>
+
+<span style="color: #B00040">void</span> <span style="color: #0000FF">draw</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+  <span style="color: #008000">background</span><span style="color: #666666">(255);</span>
+  <span style="color: #008000">translate</span><span style="color: #666666">(</span><span style="color: #19177C">width</span> <span style="color: #666666">/</span> <span style="color: #666666">2,</span> <span style="color: #19177C">height</span> <span style="color: #666666">/</span> <span style="color: #666666">2);</span>
+  <span style="color: #008000">scale</span><span style="color: #666666">(</span><span style="color: #19177C">width</span> <span style="color: #666666">/</span> <span style="color: #666666">7,</span> <span style="color: #666666">-</span><span style="color: #19177C">width</span> <span style="color: #666666">/</span> <span style="color: #666666">7);</span>
+  <span style="color: #008000">translate</span><span style="color: #666666">(-2,</span> <span style="color: #666666">0);</span>
+
+  <span style="color: #008000; font-weight: bold">for</span> <span style="color: #666666">(</span><span style="color: #B00040">int</span> i <span style="color: #666666">=</span> <span style="color: #666666">0;</span> i <span style="color: #666666">&lt;</span> <span style="color: #666666">5;</span> i<span style="color: #666666">++)</span> <span style="color: #666666">{</span>
+    <span style="color: #008000">fill</span><span style="color: #666666">(</span>intArray<span style="color: #666666">[</span>i<span style="color: #666666">]);</span>
+    <span style="color: #008000">ellipse</span><span style="color: #666666">(</span>i<span style="color: #666666">,</span> <span style="color: #666666">0,</span> <span style="color: #666666">0.4,</span> <span style="color: #666666">0.4);</span>
+  <span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
+
+<span style="color: #B00040">void</span> <span style="color: #0000FF">keyPressed</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+
+  <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span><span style="color: #19177C">key</span> <span style="color: #666666">==</span> <span style="color: #BA2121">&#39;1&#39;</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+
+    <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>intArray<span style="color: #666666">[0]</span> <span style="color: #666666">==</span> <span style="color: #666666">0)</span> <span style="color: #666666">{</span>  <span style="color: #408080; font-style: italic">// Access a value in the array.</span>
+
+      intArray<span style="color: #666666">[0]</span> <span style="color: #666666">=</span> <span style="color: #666666">255;</span>     <span style="color: #408080; font-style: italic">// Change a value in the array.</span>
+
+    <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>intArray<span style="color: #666666">[0]</span> <span style="color: #666666">==</span> <span style="color: #666666">255)</span> <span style="color: #666666">{</span>
+      intArray<span style="color: #666666">[0]</span> <span style="color: #666666">=</span> <span style="color: #666666">0;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000">redraw</span><span style="color: #666666">();</span>
+
+  <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span><span style="color: #19177C">key</span> <span style="color: #666666">==</span> <span style="color: #BA2121">&#39;2&#39;</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+    
+    <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>intArray<span style="color: #666666">[1]</span> <span style="color: #666666">==</span> <span style="color: #666666">0)</span> <span style="color: #666666">{</span>
+      intArray<span style="color: #666666">[1]</span> <span style="color: #666666">=</span> <span style="color: #666666">255;</span>
+    <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>intArray<span style="color: #666666">[1]</span> <span style="color: #666666">==</span> <span style="color: #666666">255)</span> <span style="color: #666666">{</span>
+      intArray<span style="color: #666666">[1]</span> <span style="color: #666666">=</span> <span style="color: #666666">0;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000">redraw</span><span style="color: #666666">();</span>
+
+  <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span><span style="color: #19177C">key</span> <span style="color: #666666">==</span> <span style="color: #BA2121">&#39;3&#39;</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+
+    <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>intArray<span style="color: #666666">[2]</span> <span style="color: #666666">==</span> <span style="color: #666666">0)</span> <span style="color: #666666">{</span>
+      intArray<span style="color: #666666">[2]</span> <span style="color: #666666">=</span> <span style="color: #666666">255;</span>
+    <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>intArray<span style="color: #666666">[2]</span> <span style="color: #666666">==</span> <span style="color: #666666">255)</span> <span style="color: #666666">{</span>
+      intArray<span style="color: #666666">[2]</span> <span style="color: #666666">=</span> <span style="color: #666666">0;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000">redraw</span><span style="color: #666666">();</span>
+
+  <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span><span style="color: #19177C">key</span> <span style="color: #666666">==</span> <span style="color: #BA2121">&#39;4&#39;</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+
+    <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>intArray<span style="color: #666666">[3]</span> <span style="color: #666666">==</span> <span style="color: #666666">0)</span> <span style="color: #666666">{</span>
+      intArray<span style="color: #666666">[3]</span> <span style="color: #666666">=</span> <span style="color: #666666">255;</span>
+    <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>intArray<span style="color: #666666">[3]</span> <span style="color: #666666">==</span> <span style="color: #666666">255)</span> <span style="color: #666666">{</span>
+      intArray<span style="color: #666666">[3]</span> <span style="color: #666666">=</span> <span style="color: #666666">0;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000">redraw</span><span style="color: #666666">();</span>
+
+  <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span><span style="color: #19177C">key</span> <span style="color: #666666">==</span> <span style="color: #BA2121">&#39;5&#39;</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+
+    <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>intArray<span style="color: #666666">[4]</span> <span style="color: #666666">==</span> <span style="color: #666666">0)</span> <span style="color: #666666">{</span>
+      intArray<span style="color: #666666">[4]</span> <span style="color: #666666">=</span> <span style="color: #666666">255;</span>
+    <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>intArray<span style="color: #666666">[4]</span> <span style="color: #666666">==</span> <span style="color: #666666">255)</span> <span style="color: #666666">{</span>
+      intArray<span style="color: #666666">[4]</span> <span style="color: #666666">=</span> <span style="color: #666666">0;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000">redraw</span><span style="color: #666666">();</span>
+  <span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
+</pre>
+</div>
+<p>This program uses an array variable to hold 5 integers. (I called the variable <span class="code" style="font-family:monospace;">intArray</span>, but you can call it whatever you want, just like a normal variable.) There are four steps to preparing and using an array that are illustrated by this program:</p>
+<ol type="1">
+<li><p>Declare the array variable:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span><span style="color: #B00040">int</span><span style="color: #666666">[]</span> intArray<span style="color: #666666">;</span>
+</pre>
+</div></li>
+<li><p>Create an array and assign it to the variable:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span>intArray <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> <span style="color: #B00040">int</span><span style="color: #666666">[5];</span>
+</pre>
+</div></li>
+<li><p>Assign values to the elements of the array:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span><span style="color: #008000; font-weight: bold">for</span> <span style="color: #666666">(</span><span style="color: #B00040">int</span> i <span style="color: #666666">=</span> <span style="color: #666666">0;</span> i <span style="color: #666666">&lt;</span> <span style="color: #666666">5;</span> i<span style="color: #666666">++)</span> <span style="color: #666666">{</span>
+  intArray<span style="color: #666666">[</span>i<span style="color: #666666">]</span> <span style="color: #666666">=</span> <span style="color: #666666">0;</span>
+<span style="color: #666666">}</span>
+</pre>
+</div></li>
+<li><p>Access values previously assigned to elements of the array (and change them):</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span><span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>intArray<span style="color: #666666">[0]</span> <span style="color: #666666">==</span> <span style="color: #666666">0)</span> <span style="color: #666666">{</span>  <span style="color: #408080; font-style: italic">// Access a value.</span>
+
+  intArray<span style="color: #666666">[0]</span> <span style="color: #666666">==</span> <span style="color: #666666">255;</span>  <span style="color: #408080; font-style: italic">// Change a value.</span>
+<span style="color: #666666">}</span>
+</pre>
+</div></li>
+</ol>
+<p>Notice that the first element of the array has index 0 (and the last has an index 1 less than the number of elements in the array).</p>
+<p>There are several ways this program might be improved. First, since there are only two possible values for each element of the array, it would make sense to use an array of <span class="code" style="font-family:monospace;">boolean</span> (<span class="code" style="font-family:monospace;">true</span> or <span class="code" style="font-family:monospace;">false</span>) values rather than an array of integers. Also, it’s possible to declare the array variable, create a new array, and assign values to each element…all in a single statement:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span><span style="color: #B00040">boolean</span><span style="color: #666666">[]</span> boolArray <span style="color: #666666">=</span> <span style="color: #666666">{</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">,</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">,</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">,</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">,</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">,</span> <span style="color: #008000; font-weight: bold">false</span> <span style="color: #666666">};</span>
+</pre>
+</div>
+<p>Wait a minute…if you count the number of elements (each <span class="code" style="font-family:monospace;">false</span> in the statement above) there’s 6, not 5. So if you wanted to change the program to use <span class="code" style="font-family:monospace;">boolArray</span> instead of <span class="code" style="font-family:monospace;">intArray</span>, you’d have to make it use 6 wherever 5 was used in the original version. There’s a better way to deal with that problem, however. Use the <span class="code" style="font-family:monospace;">length</span> field created automatically for array variables:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span><span style="color: #008000">translate</span><span style="color: #666666">(</span><span style="color: #19177C">width</span> <span style="color: #666666">/</span> <span style="color: #666666">2,</span> <span style="color: #19177C">height</span> <span style="color: #666666">/</span> <span style="color: #666666">2);</span>
+<span style="color: #B00040">float</span> scaleFactor <span style="color: #666666">=</span> <span style="color: #19177C">width</span> <span style="color: #666666">/</span> <span style="color: #666666">(</span>boolArray<span style="color: #666666">.</span><span style="color: #7D9029">length</span> <span style="color: #666666">+</span> <span style="color: #666666">2);</span>
+<span style="color: #008000">scale</span><span style="color: #666666">(</span>scaleFactor<span style="color: #666666">,</span> <span style="color: #666666">-</span>scaleFactor<span style="color: #666666">);</span>
+<span style="color: #008000">translate</span><span style="color: #666666">(-(</span>boolArray<span style="color: #666666">.</span><span style="color: #7D9029">length</span> <span style="color: #666666">-</span> <span style="color: #666666">1)</span> <span style="color: #666666">/</span> <span style="color: #666666">2.0,</span> <span style="color: #666666">0);</span>
+</pre>
+</div>
+<p>These lines 1) put the origin at the center of the window, 2) scale the window so that, if there are <span class="math inline"><em>n</em></span> elements in the array, the window is <span class="math inline"><em>n</em> + 2</span> units wide, and 3) move the origin to the proper position for the center of the leftmost circle. Most importantly, they will work no matter how many elements are in the array. The array’s <span class="code" style="font-family:monospace;">length</span> field can also be used to make a loop work for any size array:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span><span style="color: #008000; font-weight: bold">for</span> <span style="color: #666666">(</span><span style="color: #B00040">int</span> i <span style="color: #666666">=</span> <span style="color: #666666">0;</span> i <span style="color: #666666">&lt;</span> boolArray<span style="color: #666666">.</span><span style="color: #7D9029">length</span><span style="color: #666666">;</span> i<span style="color: #666666">++)</span> <span style="color: #666666">{</span>
+
+  <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>boolArray<span style="color: #666666">[</span>i<span style="color: #666666">])</span> <span style="color: #666666">{</span>  <span style="color: #408080; font-style: italic">// Same as:  if (boolArray[i] == true) {</span>
+    <span style="color: #008000">fill</span><span style="color: #666666">(255);</span>
+  <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #666666">{</span>
+    <span style="color: #008000">fill</span><span style="color: #666666">(0);</span>
+  <span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
+</pre>
+</div>
+<p>Notice how the code inside the loop changes when the array holds <span class="code" style="font-family:monospace;">boolean</span> rather than <span class="code" style="font-family:monospace;">int</span> values. Since a <span class="code" style="font-family:monospace;">boolean</span> value is either <span class="code" style="font-family:monospace;">true</span> or <span class="code" style="font-family:monospace;">false</span>, it can be used as a <span class="code" style="font-family:monospace;">boolean</span> expression in an <span class="code" style="font-family:monospace;">if</span> statement.</p>
+<p>Finally, <span class="code" style="font-family:monospace;">keyTyped</span> can be improved a lot—it’s much longer in the code above than it needs to be. Consider the following statement:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span><span style="color: #B00040">int</span> index <span style="color: #666666">=</span> <span style="color: #19177C">key</span> <span style="color: #666666">-</span> <span style="color: #BA2121">&#39;1&#39;</span><span style="color: #666666">;</span>
+</pre>
+</div>
+<p><span class="code" style="font-family:monospace;">key</span> is a <span class="code" style="font-family:monospace;">char</span> (for “character”) variable. A <span class="code" style="font-family:monospace;">char</span> variable is actually a special kind of integer, whose value can be interpreted as a number or as a character (the character assigned to that number in the <a href="http://en.wikipedia.org/wiki/ASCII">ASCII</a> standard). <span class="code" style="font-family:monospace;">'1'</span> is a <span class="code" style="font-family:monospace;">char</span> too: it can be interpreted as the character “1” or the number 49; <span class="code" style="font-family:monospace;">'2'</span> is a <span class="code" style="font-family:monospace;">char</span> that can be interpreted as “2” or 50; <span class="code" style="font-family:monospace;">'3'</span> can be interpreted as “3” or 51, etc. The expression <span class="code" style="font-family:monospace;">key - '1'</span>, then, will have the value 0 if <span class="code" style="font-family:monospace;">key</span> is <span class="code" style="font-family:monospace;">'1'</span>, 1 if <span class="code" style="font-family:monospace;">key</span> is <span class="code" style="font-family:monospace;">'2'</span>, 2 if <span class="code" style="font-family:monospace;">key</span> is <span class="code" style="font-family:monospace;">'3'</span>, and so on. This value is the exactly what we need! We can use it to access the array element that goes with each number on the keyboard.</p>
+<p>Once we have this index value, we can check if it’s a valid index for our array. If it’s not valid, the user hit some other key, which should be ignored. If it is valid, we can toggle the value at that index (make it <span class="code" style="font-family:monospace;">true</span> if it was <span class="code" style="font-family:monospace;">false</span>, or <span class="code" style="font-family:monospace;">false</span> if it was <span class="code" style="font-family:monospace;">true</span>), and then update the window:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span><span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>index <span style="color: #666666">&gt;=</span> <span style="color: #666666">0</span> <span style="color: #666666">&amp;&amp;</span> index <span style="color: #666666">&lt;</span> boolArray<span style="color: #666666">.</span><span style="color: #7D9029">length</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+  boolArray<span style="color: #666666">[</span>index<span style="color: #666666">]</span> <span style="color: #666666">=</span> <span style="color: #666666">!</span>boolArray<span style="color: #666666">[</span>index<span style="color: #666666">];</span>
+  <span style="color: #008000">redraw</span><span style="color: #666666">();</span>
+<span style="color: #666666">}</span>
+</pre>
+</div>
+<p>(Can you figure out what <span class="code" style="font-family:monospace;">&amp;&amp;</span> and <span class="code" style="font-family:monospace;">!</span> mean? Check the Processing documentation online if you aren’t sure.)</p>
+<p>Here’s the full program with all of these changes.</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span><span style="color: #B00040">boolean</span><span style="color: #666666">[]</span> boolArray <span style="color: #666666">=</span> <span style="color: #666666">{</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">,</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">,</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">,</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">,</span> <span style="color: #008000; font-weight: bold">false</span><span style="color: #666666">,</span> <span style="color: #008000; font-weight: bold">false</span> <span style="color: #666666">};</span>
+
+<span style="color: #B00040">void</span> <span style="color: #0000FF">setup</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+  <span style="color: #008000">size</span><span style="color: #666666">(700,</span> <span style="color: #666666">300);</span>
+  <span style="color: #008000">strokeWeight</span><span style="color: #666666">(0.1);</span>
+  <span style="color: #008000">ellipseMode</span><span style="color: #666666">(</span><span style="color: #880000">RADIUS</span><span style="color: #666666">);</span>
+  <span style="color: #008000">noLoop</span><span style="color: #666666">();</span>
+<span style="color: #666666">}</span>
+
+<span style="color: #B00040">void</span> <span style="color: #0000FF">draw</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+  <span style="color: #008000">background</span><span style="color: #666666">(255);</span>
+  <span style="color: #008000">translate</span><span style="color: #666666">(</span><span style="color: #19177C">width</span> <span style="color: #666666">/</span> <span style="color: #666666">2,</span> <span style="color: #19177C">height</span> <span style="color: #666666">/</span> <span style="color: #666666">2);</span>
+  <span style="color: #B00040">float</span> scaleFactor <span style="color: #666666">=</span> <span style="color: #19177C">width</span> <span style="color: #666666">/</span> <span style="color: #666666">(</span>boolArray<span style="color: #666666">.</span><span style="color: #7D9029">length</span> <span style="color: #666666">+</span> <span style="color: #666666">2);</span>
+  <span style="color: #008000">scale</span><span style="color: #666666">(</span>scaleFactor<span style="color: #666666">,</span> <span style="color: #666666">-</span>scaleFactor<span style="color: #666666">);</span>
+  <span style="color: #008000">translate</span><span style="color: #666666">(-(</span>boolArray<span style="color: #666666">.</span><span style="color: #7D9029">length</span> <span style="color: #666666">-</span> <span style="color: #666666">1)</span> <span style="color: #666666">/</span> <span style="color: #666666">2.0,</span> <span style="color: #666666">0);</span>
+
+  <span style="color: #008000; font-weight: bold">for</span> <span style="color: #666666">(</span><span style="color: #B00040">int</span> i <span style="color: #666666">=</span> <span style="color: #666666">0;</span> i <span style="color: #666666">&lt;</span> boolArray<span style="color: #666666">.</span><span style="color: #7D9029">length</span><span style="color: #666666">;</span> i<span style="color: #666666">++)</span> <span style="color: #666666">{</span>
+
+    <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>boolArray<span style="color: #666666">[</span>i<span style="color: #666666">])</span> <span style="color: #666666">{</span>
+      <span style="color: #008000">fill</span><span style="color: #666666">(255);</span>
+    <span style="color: #666666">}</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #666666">{</span>
+      <span style="color: #008000">fill</span><span style="color: #666666">(0);</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #008000">ellipse</span><span style="color: #666666">(</span>i<span style="color: #666666">,</span> <span style="color: #666666">0,</span> <span style="color: #666666">0.4,</span> <span style="color: #666666">0.4);</span>
+  <span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
+
+<span style="color: #B00040">void</span> <span style="color: #0000FF">keyPressed</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+  <span style="color: #B00040">int</span> index <span style="color: #666666">=</span> <span style="color: #19177C">key</span> <span style="color: #666666">-</span> <span style="color: #BA2121">&#39;1&#39;</span><span style="color: #666666">;</span>
+
+  <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>index <span style="color: #666666">&gt;=</span> <span style="color: #666666">0</span> <span style="color: #666666">&amp;&amp;</span> index <span style="color: #666666">&lt;</span> boolArray<span style="color: #666666">.</span><span style="color: #7D9029">length</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+    boolArray<span style="color: #666666">[</span>index<span style="color: #666666">]</span> <span style="color: #666666">=</span> <span style="color: #666666">!</span>boolArray<span style="color: #666666">[</span>index<span style="color: #666666">];</span>
+    <span style="color: #008000">redraw</span><span style="color: #666666">();</span>
+  <span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
+</pre>
+</div>
+<p>For more practice with arrays, modify this program so that, instead of hitting a number key to lighten or darken a circle, the arrow keys are used to select a circle and the space bar lightens or darkens it. To mark a circle selected, call <span class="code" style="font-family:monospace;">stroke</span> with values for a lighter color; leave the outline black for non-selected circles. Also, you can use <span class="code" style="font-family:monospace;">key == ' '</span> to check whether the user hit the space bar.</p>
+<p>Save your modified program as “PickACircle” and submit it for part 5 of this assignment.</p>
+<h4 id="part-6">Part 6</h4>
+<p>For part 6 you’ll create an interactive Tic Tac Toe program—your first game! But you need to know about “two-dimensional” arrays before you start…</p>
+<p>In Processing you can make an array to hold any kind of values, which means you can make an array of arrays. This is a common thing to do, so there’s a special syntax for it:</p>
+<ol type="1">
+<li><p>To declare a two-dimensional array variable (to hold <span class="code" style="font-family:monospace;">char</span> values, in this case):</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span><span style="color: #B00040">char</span><span style="color: #666666">[][]</span> cells<span style="color: #666666">;</span>
+</pre>
+</div></li>
+<li><p>To create a two-dimensional array and assign it to <span class="code" style="font-family:monospace;">cells</span>:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span>cells <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">new</span> <span style="color: #B00040">char</span><span style="color: #666666">[</span>N<span style="color: #666666">][</span>N<span style="color: #666666">];</span>  <span style="color: #408080; font-style: italic">// N would be 3 for a normal</span>
+                         <span style="color: #408080; font-style: italic">// Tic Tac Toe board.</span>
+</pre>
+</div></li>
+<li><p>To assign values to each element of the array, you can use a nested loop:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span><span style="color: #008000; font-weight: bold">for</span> <span style="color: #666666">(</span><span style="color: #B00040">int</span> x <span style="color: #666666">=</span> <span style="color: #666666">0;</span> x <span style="color: #666666">&lt;</span> cells<span style="color: #666666">.</span><span style="color: #7D9029">length</span><span style="color: #666666">;</span> x<span style="color: #666666">++)</span> <span style="color: #666666">{</span>
+  <span style="color: #008000; font-weight: bold">for</span> <span style="color: #666666">(</span><span style="color: #B00040">int</span> y <span style="color: #666666">=</span> <span style="color: #666666">0;</span> y <span style="color: #666666">&lt;</span> cells<span style="color: #666666">[</span>x<span style="color: #666666">].</span><span style="color: #7D9029">length</span><span style="color: #666666">;</span> y<span style="color: #666666">++)</span> <span style="color: #666666">{</span>
+    cells<span style="color: #666666">[</span>x<span style="color: #666666">][</span>y<span style="color: #666666">]</span> <span style="color: #666666">=</span> <span style="color: #BA2121">&#39; &#39;</span><span style="color: #666666">;</span>
+  <span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
+</pre>
+</div></li>
+<li><p>To access values previously assigned to elements of the array (and change them):</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span><span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">(</span>cells<span style="color: #666666">[0][0]</span> <span style="color: #666666">==</span> <span style="color: #BA2121">&#39; &#39;</span><span style="color: #666666">)</span> <span style="color: #666666">{</span>
+  cells<span style="color: #666666">[0][0]</span> <span style="color: #666666">=</span> <span style="color: #BA2121">&#39;X&#39;</span><span style="color: #666666">;</span>
+<span style="color: #666666">}</span>
+</pre>
+</div></li>
+</ol>
+<p>Notice how <span class="code" style="font-family:monospace;">cells.length</span> and <span class="code" style="font-family:monospace;">cells[x].length</span> are used to make the nested loop work for any size two-dimensional array. <span class="code" style="font-family:monospace;">cells.length</span> is the number of sub-arrays; the sub-array at index <span class="code" style="font-family:monospace;">x</span> is <span class="code" style="font-family:monospace;">cells[x]</span>, and so <span class="code" style="font-family:monospace;">cells[x].length</span> is the length of the sub-array at index <span class="code" style="font-family:monospace;">x</span>.</p>
+<p>Start your Tic Tac Toe program with the following code, which draws a <span class="math inline">3 × 3</span> board:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="font-family:monospace;"><span></span><span style="color: #B00040">void</span> <span style="color: #0000FF">setup</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+  <span style="color: #008000">size</span><span style="color: #666666">(400,</span> <span style="color: #666666">400);</span>
+  <span style="color: #008000">noLoop</span><span style="color: #666666">();</span>
+<span style="color: #666666">}</span>
+
+<span style="color: #B00040">void</span> <span style="color: #0000FF">draw</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+  <span style="color: #008000">translate</span><span style="color: #666666">(0,</span> <span style="color: #19177C">height</span><span style="color: #666666">);</span>          <span style="color: #408080; font-style: italic">// Move origin to lower left.</span>
+  <span style="color: #008000">scale</span><span style="color: #666666">(</span><span style="color: #19177C">width</span> <span style="color: #666666">/</span> <span style="color: #666666">5,</span> <span style="color: #666666">-</span><span style="color: #19177C">width</span> <span style="color: #666666">/</span> <span style="color: #666666">5);</span>  <span style="color: #408080; font-style: italic">// Make window 5x5, flip y axis.</span>
+  <span style="color: #008000">translate</span><span style="color: #666666">(1,</span> <span style="color: #666666">1);</span>               <span style="color: #408080; font-style: italic">// Move origin up 1 and over 1</span>
+                                 <span style="color: #408080; font-style: italic">// (where we&#39;ll put the lower</span>
+                                 <span style="color: #408080; font-style: italic">// left corner of the board).</span>
+  <span style="color: #008000">strokeWeight</span><span style="color: #666666">(0.05);</span>
+  <span style="color: #008000">background</span><span style="color: #666666">(255);</span>
+  drawBoard<span style="color: #666666">();</span>
+<span style="color: #666666">}</span>
+
+<span style="color: #B00040">void</span> <span style="color: #0000FF">drawBoard</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+  <span style="color: #008000">stroke</span><span style="color: #666666">(100);</span>
+
+  <span style="color: #008000; font-weight: bold">for</span> <span style="color: #666666">(</span><span style="color: #B00040">int</span> i <span style="color: #666666">=</span> <span style="color: #666666">1;</span> i <span style="color: #666666">&lt;</span> <span style="color: #666666">3;</span> i<span style="color: #666666">++)</span> <span style="color: #666666">{</span>
+    <span style="color: #008000">line</span><span style="color: #666666">(</span>i<span style="color: #666666">,</span> <span style="color: #666666">0,</span> i<span style="color: #666666">,</span> <span style="color: #666666">3);</span>  <span style="color: #408080; font-style: italic">// vertical</span>
+    <span style="color: #008000">line</span><span style="color: #666666">(0,</span> i<span style="color: #666666">,</span> <span style="color: #666666">3,</span> i<span style="color: #666666">);</span>  <span style="color: #408080; font-style: italic">// horizontal</span>
+  <span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
+</pre>
+</div>
+<p>Modify the program so that it works for any size (square, at least <span class="math inline">2 × 2</span>) board. Then add code to draw a light-colored square initially filling the lower left space on the board; make it so that, if the user hits an arrow key, the lighter square moves to an adjacent space, as long as this won’t move it off the board.</p>
+<p>If you aren’t sure what to do, here’s (roughly) how my program works:</p>
+<ol type="1">
+<li><p>At the beginning of the program I declare two variables, <span class="code" style="font-family:monospace;">xMarker</span> and <span class="code" style="font-family:monospace;">yMarker</span>, to keep track of where the lighter square should be. Both <span class="code" style="font-family:monospace;">xMarker</span> and <span class="code" style="font-family:monospace;">yMarker</span> are initialized to zero.</p></li>
+<li><p>I have a <span class="code" style="font-family:monospace;">drawMarker</span> function that draws the ligher square, a <span class="math inline">1 × 1</span> rectangle whose lower left corner is at (<span class="code" style="font-family:monospace;">xMarker</span>, <span class="code" style="font-family:monospace;">yMarker</span>). I call this function in <span class="code" style="font-family:monospace;">draw</span>, before calling <span class="code" style="font-family:monospace;">drawBoard</span>, so that the grid lines show over the marker square.</p></li>
+<li><p>I have a <span class="code" style="font-family:monospace;">keyPressed</span> function that changes the value of <span class="code" style="font-family:monospace;">xMarker</span> or <span class="code" style="font-family:monospace;">yMarker</span>, if the user hits one of the arrow keys, and then calls <span class="code" style="font-family:monospace;">redraw</span> to update the window. It’s in this function that I check to see if changing the value of <span class="code" style="font-family:monospace;">xMarker</span> or <span class="code" style="font-family:monospace;">yMarker</span> would move the marker square off the board. If it would, that key press is ignored.</p></li>
+</ol>
+<p>Once you have this working, add code so that, if the user hits the space bar when the marker square is over an empty space on the board, either an “X” or “O” is drawn in the space. To do this, you’ll need 1) a variable to keep track of whose turn it is (alternating between “X” and “O”), and 2) a two-dimensional array to keep track of whether each board space is blank, contains “X”, or contains “O.”</p>
+<p>Here’s how my program does all this:</p>
+<ol type="1">
+<li><p>At the beginning of the program I declare a global <span class="code" style="font-family:monospace;">char</span> variable, called <span class="code" style="font-family:monospace;">turn</span>, and set it to <span class="code" style="font-family:monospace;">'X'</span>. I also declare a (global) two-dimensional array of <span class="code" style="font-family:monospace;">char</span> values, called <span class="code" style="font-family:monospace;">cells</span>, and assign a new <span class="math inline"><em>N</em> × <em>N</em></span> <span class="code" style="font-family:monospace;">char</span> array to it. (Refer to the beginning of this section, part 6, if you aren’t sure how to do this.)</p></li>
+<li><p>In <span class="code" style="font-family:monospace;">setup</span>, I use a nested loop to fill the two-dimensional array <span class="code" style="font-family:monospace;">cells</span> with <span class="code" style="font-family:monospace;">' '</span> (the space character). (Refer to the beginning of this section…)</p></li>
+<li><p>In <span class="code" style="font-family:monospace;">keyPressed</span>, I added a case to the <span class="code" style="font-family:monospace;">if</span> statement to respond when the user hits the space bar. If they hit the space bar, I check the two-dimensional array <span class="code" style="font-family:monospace;">cells</span> at indices <span class="code" style="font-family:monospace;">xMarker</span> and <span class="code" style="font-family:monospace;">yMarker</span> to see if that space is blank (i.e., it’s <span class="code" style="font-family:monospace;">' '</span> rather than <span class="code" style="font-family:monospace;">'X'</span> or <span class="code" style="font-family:monospace;">'O'</span>). If it is, I call the <span class="code" style="font-family:monospace;">updateCells</span> function (described next) and then call <span class="code" style="font-family:monospace;">redraw</span> to update the window.</p></li>
+<li><p>In the <span class="code" style="font-family:monospace;">updateCells</span> function, I set the cell at indices <span class="code" style="font-family:monospace;">xMarker</span> and <span class="code" style="font-family:monospace;">yMarker</span> (in the two-dimensional array <span class="code" style="font-family:monospace;">cells</span>) equal to the current value of <span class="code" style="font-family:monospace;">turn</span>. Then I change the value of <span class="code" style="font-family:monospace;">turn</span>—to <span class="code" style="font-family:monospace;">'O'</span> if it was <span class="code" style="font-family:monospace;">'X'</span>; to <span class="code" style="font-family:monospace;">'X'</span> if it was <span class="code" style="font-family:monospace;">'O'</span>.</p></li>
+<li><p>Finally, I have a <span class="code" style="font-family:monospace;">drawCells</span> function that loops through the two-dimensional array <span class="code" style="font-family:monospace;">cells</span>, drawing an “X” or an “O” (or leaving the space blank) on the board, depending on what it finds in the array. This function is called from <span class="code" style="font-family:monospace;">draw</span>, after <span class="code" style="font-family:monospace;">drawMarker</span>, so that the “X” or “O” for a filled square appears in front of the marker square. Here’s pseudocode for <span class="code" style="font-family:monospace;">drawCells</span>:</p>
+<pre><span class="code" style="font-family:monospace;">for x in 0...cells.length
+  for y in 0...cells[x].length
+    save coordinate system
+    move origin to (x, y)
+
+    if cells[x][y] is &#39;X&#39;
+      draw an X (two lines)
+    else if cells[x][y] is &#39;O&#39;
+      draw an O (a circle)
+
+    restore saved coordinate system</span></pre></li>
+</ol>
+<p>Once you have all of this working, tweak it to make it look nice (make it colorful, etc.). Also test it to make sure it works for any size (square, at least <span class="math inline">2 × 2</span>) board. Save your program as “TicTacToe” and submit it for part 6.</p>
+<h4 id="part-7-optional-extra-challenge">Part 7 (Optional Extra Challenge)</h4>
+<p>For an optional extra challenge, create a computer opponent for the user to play against. Start by designing a strategy; then break up the implementation of the strategy into a series of development steps; then implement and test them one at a time. For example, here’s what I tried:</p>
+<ol type="1">
+<li><p>Strategy:</p>
+<ul>
+<li>If you can win in one move, win.</li>
+<li>Otherwise, if the other player can win in one move, block.</li>
+<li>Otherwise, pick a random space and play in it.</li>
+</ul>
+<p>(This turns out to be a decent strategy for preventing the other player from winning, but not a great strategy for the computer to actually win games.)</p></li>
+<li><p>First development step:</p>
+<ul>
+<li>Make the computer play in a random (available) square.</li>
+</ul></li>
+<li><p>Next step:</p>
+<ul>
+<li>Make the computer play in the first available square that completes a row or column. (This could be a win or a block.)</li>
+<li>If no such square is available, fall back to the previous step—play in a random square.</li>
+</ul></li>
+<li><p>Next step:</p>
+<ul>
+<li>Distinguish between wins and blocks; make the computer try to win first and only block if it can’t win.</li>
+<li>If it can’t win or block, it should play in a random square.</li>
+</ul></li>
+<li><p>Next step:</p>
+<ul>
+<li>Add code to handle diagonal wins and blocks…</li>
+</ul></li>
+<li><p>Final step:</p>
+<ul>
+<li>Detect wins.</li>
+<li>Don’t allow either player to play after one of them has won.</li>
+</ul></li>
+</ol>
+<p>If you complete this version of the program, save it as “TicTacTwo” (isn’t that clever!) and submit it for part 7.</p>
+<h4 id="grading">Grading</h4>
+<p>Your grade will be based on the following rubric:</p>
+<table style="width:93%;">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 79%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center; vertical-align: top">/ 10</td>
+<td style="text-align: left; vertical-align: top">Snowman.pde submitted, shows reasonable effort, runs without errors to produce nice-looking output.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; vertical-align: top">/ 15</td>
+<td style="text-align: left; vertical-align: top">Circles.pde submitted, shows reasonable effort, runs without errors, includes creative modifications.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center; vertical-align: top">/ 10</td>
+<td style="text-align: left; vertical-align: top">MovingSnowman.pde submitted, shows reasonable effort, runs without errors, works correctly.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; vertical-align: top">/ 10</td>
+<td style="text-align: left; vertical-align: top">SpinningStars.pde submitted, shows reasonable effort, runs without errors, works correctly.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center; vertical-align: top">/ 20</td>
+<td style="text-align: left; vertical-align: top">PickACircle.pde submitted, shows reasonable effort, runs without errors, works correctly.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; vertical-align: top">/ 25</td>
+<td style="text-align: left; vertical-align: top">TicTacToe.pde submitted, shows reasonable effort, runs without errors, works correctly, produces nice-looking output.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center; vertical-align: top">/ 10</td>
+<td style="text-align: left; vertical-align: top">Randomly selected source code file has clear and consistent formatting, appropriate comments, etc.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; vertical-align: top">/ 10</td>
+<td style="text-align: left; vertical-align: top">Up to 10 points <em>extra credit</em> for TicTacTwo.pde, although overall grade for the assignment may not exceed 100.</td>
+</tr>
+</tbody>
+</table>&nbsp;
+</body>
+</html>
+

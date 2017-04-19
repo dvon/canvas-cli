@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="canvas.css">
+</head>
+<body>
+<h4 id="schedule">Schedule</h4>
+<ul>
+<li>Friday 11/14
+<ul>
+<li>Chapter 8</li>
+</ul></li>
+<li>For Monday 11/17
+<ul>
+<li>Read Chapter 8</li>
+</ul></li>
+</ul>
+<h4 id="while"><span style="font-family:monospace;">while</span></h4>
+<ul>
+<li><span style="font-family:monospace;">while</span> is like <span style="font-family:monospace;">if</span>, except…
+<ul>
+<li>With <span style="font-family:monospace;">if</span>, you check the condition; if it’s <span style="font-family:monospace;">True</span> you run the indented code.</li>
+<li>With <span style="font-family:monospace;">while</span>, you check the condition; if it’s <span style="font-family:monospace;">True</span> you run the indented code; then you check it again…<em>and keep going until the condition becomes <span style="font-family:monospace;">False</span></em>.</li>
+</ul></li>
+<li><span style="font-family:monospace;">while</span> is more general than <span style="font-family:monospace;">for</span>.
+<ul>
+<li>With <span style="font-family:monospace;">while</span> you have more flexibility.</li>
+<li>With <span style="font-family:monospace;">while</span>, it’s much easier to (accidentally) create an infinite loop—<em>Always check that there’s something inside the loop that will eventually cause the condition to change from <span style="font-family:monospace;">True</span> to <span style="font-family:monospace;">False</span></em>.</li>
+</ul></li>
+</ul>
+<h4 id="while-vs.-for"><span style="font-family:monospace;">while</span> vs. <span style="font-family:monospace;">for</span></h4>
+<ul>
+<li><p>How would you write the following loop using <span style="font-family:monospace;">while</span> instead of <span style="font-family:monospace;">for</span>?</p>
+<div class="highlight" style="background: #ffffff"><pre style="font-family:monospace;"><span style="color: #ff6600">for</span> i <span style="color: #ff6600">in</span> <span style="color: #990099">range</span>(<span style="color: #990099">len</span>(s)):
+    <span style="color: #990099">print</span>(<span style="color: #990099">ord</span>(s[i]), end=<span style="color: #009900">&quot; &quot;</span>)
+</pre></div>
+
+</li>
+<li>Hints…
+<ul>
+<li>What needs to happen <em>once at the beginning</em>?</li>
+<li>What condition needs to be checked <em>at the beginning of each loop iteration</em>?</li>
+<li>What needs to happen <em>at the end of each loop iteration</em>?</li>
+</ul></li>
+</ul>
+<h4 id="common-indefinite-loop-patterns">Common Indefinite Loop Patterns</h4>
+<ul>
+<li><em>Interactive</em> Loop
+<ul>
+<li>Run loop code, <em>ask for input</em> (“Do you want to do this again?”), continue or exit loop based on the response you get.</li>
+<li>To make this work, you need <em>a <span style="font-family:monospace;">while</span> loop with a condition to check the user’s response</em>.</li>
+</ul></li>
+<li><em>Sentinel</em> Loop
+<ul>
+<li>If the loop code inputs data with every iteration, you don’t need to ask the user whether they want to continue.</li>
+<li>Instead, specify a <em>sentinel</em> value that, if input as data, signals that there’s no more data (and the program should therefore exit the loop).</li>
+<li>The sentinel value <em>must not be a valid data value</em>.</li>
+</ul></li>
+</ul>
+<h4 id="what-if-you-had-readline-and-had-to-write-readlines">What if you had <span style="font-family:monospace;">readline</span> and had to write <span style="font-family:monospace;">readlines</span>?</h4>
+<ul>
+<li><em>You’d need an indefinite loop</em>, because you don’t know how many lines there are in the file.
+<ul>
+<li>You can use <span style="font-family:monospace;">readline</span> inside the loop to read one line in each loop iteration.</li>
+<li>If you get <span style="font-family:monospace;">&quot;&quot;</span> when you try to read a line, you’ve reached the end of the file. (You get <span style="font-family:monospace;">\n</span> for a blank line.)</li>
+<li>So <em>this is a sentinel loop, and <span style="font-family:monospace;">&quot;&quot;</span> is the sentinel value</em>.</li>
+</ul></li>
+<li>In Python you don’t need to write this yourself, but in other languages you might.</li>
+</ul>
+<h4 id="nested-loops">Nested Loops</h4>
+<ul>
+<li>You can put any statement(s) you want inside a loop, <em>including the statements of another loop</em>.
+<ul>
+<li>The most common use of a nested loop is <em>to loop through a set of combinations</em> (red, green and blue values, for example).</li>
+<li>It’s also common to have code with <em>a definite loop inside an interactive</em> (“Do you want to quit yet?”) <em>loop</em>.</li>
+</ul></li>
+<li>Nested loops make code significantly <em>more difficult to understand</em>.
+<ul>
+<li>Unless the pattern is obvious (like looping through a set of combinations) <em>consider putting the inner loop in a separate function</em>.</li>
+</ul></li>
+</ul>
+<h4 id="boolean-operators">Boolean Operators</h4>
+<ul>
+<li>A <em>Boolean expression</em> is an expression that has a value of either <span style="font-family:monospace;">True</span> or <span style="font-family:monospace;">False</span>.
+<ul>
+<li>Two expressions (with numeric or string values) joined by a relational operator: <span style="font-family:monospace;">(x ** 2) &lt; n</span></li>
+<li>A single variable (assigned <span style="font-family:monospace;">True</span> or <span style="font-family:monospace;">False</span>): <span style="font-family:monospace;">prime = False</span></li>
+<li><em>Two Boolean expressions joined by a Boolean operator</em>…</li>
+</ul></li>
+<li>Boolean Operators
+<ul>
+<li><span style="font-family:monospace;">x and y</span> (<span style="font-family:monospace;">True</span> if both <span style="font-family:monospace;">x</span> and <span style="font-family:monospace;">y</span> are <span style="font-family:monospace;">True</span>)</li>
+<li><span style="font-family:monospace;">x or y</span> (<span style="font-family:monospace;">True</span> if either is—<em>or both</em> are—<span style="font-family:monospace;">True</span>)</li>
+<li><span style="font-family:monospace;">not x</span> (<span style="font-family:monospace;">True</span> if <span style="font-family:monospace;">x</span> is <span style="font-family:monospace;">False</span>)</li>
+</ul></li>
+</ul>
+<h4 id="post-test-loop">Post-Test Loop</h4>
+<ul>
+<li>Suppose you want to create an indefinite loop, but <em>there isn’t a good way to make the condition <span style="font-family:monospace;">True</span> before the first iteration</em>…
+<ul>
+<li>If it would require duplicated code before and then inside the loop, for example.</li>
+</ul></li>
+<li><p>You can use a <em>post-test loop</em>:</p>
+<div class="highlight" style="background: #ffffff"><pre style="font-family:monospace;"><span style="color: #ff6600">while</span> <span style="color: #ff6600">True</span>:
+    <span style="color: #cc0000"># Do something interesting; give allDone a value.</span>
+
+    <span style="color: #ff6600">if</span> allDone:  <span style="color: #cc0000"># Same as &quot;if allDone == True:&quot;</span>
+        <span style="color: #ff6600">break</span>
+</pre></div>
+
+
+
+</li>
+</ul>
+</body>
+</html>
+

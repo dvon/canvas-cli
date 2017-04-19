@@ -1,0 +1,55 @@
+## CIS 181 --- Quiz on Chapter 2 \hspace{2.35in} \nameblank
+
+1.  By convention, the statements of a program are often placed
+    in a function called...
+    
+    a)  `import`
+    
+    b)  `main`
+    
+    c)  `program`
+    
+    d)  `IDLE`
+
+    \vspace{0.4in}
+    
+    
+2.  Which of the following is *not* true of comments?
+
+    a)  They make a program more efficient.
+    
+    b)  They are intended for human readers.
+    
+    c)  They are ignored by Python.
+    
+    d)  In Python, they begin with a pound sign (`#`).
+    
+    \vspace{0.4in}
+
+
+3.  Which (one) of the following would *not* work as the name of
+    a variable in Python?
+    
+    a)  `fun`
+    
+    b)  `tooFun`
+    
+    c)  `2Fun`
+    
+    d)  `too_fun`
+
+    \vspace{0.4in}
+
+
+4.  What would be printed by the following code?
+
+    ~~~
+    for i in range(4):
+        print(i + 1)
+    ~~~
+    
+    \vspace{1.6in}
+
+
+5.  True or False:  The counter variable in a definite loop must
+    be called `i`.

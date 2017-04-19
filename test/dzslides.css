@@ -1,0 +1,89 @@
+html {
+  background-color: black;
+}
+  
+body {
+  border-radius: 20px;
+  font-size: 16pt;
+  font-family: sans-serif;
+  line-height: 120%;
+}
+
+h1 {
+  padding: 50px 50px 15px 50px;
+  margin-bottom: 10px;
+  font-size: 140%;
+}
+
+ul, p, pre {
+  margin: 15px 70px 15px 50px;
+}
+
+ul {
+  padding-left: 40px;
+}
+
+li {
+  margin-bottom: 30px;
+}
+
+li li {
+  margin-bottom: 5px;
+}
+
+li ul {
+  margin: 5px 0px 10px 0px;
+  padding-left: 30px;
+  list-style-type: disc;
+  font-size: 90%;
+}
+
+li p {
+  margin: 0px;
+}
+
+li pre {
+  margin: 10px 0px 10px 0px;
+}
+
+pre, code {
+  font-size: 95%;
+}
+
+q {
+  quotes: "“" "”" "‘" "’";
+}
+
+section { top: -150%; }
+section[aria-selected] { top: 0; }
+section[aria-selected] ~ section { top: +150%; }
+
+/* colors */
+
+body {
+  background-color: white;
+}
+
+h1 {
+  background-color: rgb(230, 230, 215);
+  border-bottom: 1px solid rgb(125, 125, 115);
+}
+
+ul pre, ul code {
+  color: rgb(125, 125, 115);
+  background-color: white;
+}
+
+em {
+  font-style: normal;
+  color: rgb(180, 40, 10);
+}
+
+a:link {
+  color: rgb(30, 80, 140);
+}
+
+a:visited {
+  color: rgb(110, 30, 80);
+}
+

@@ -1,0 +1,26 @@
+<style>
+
+@import url('https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i');
+
+body {
+    font-family: Lato;
+    font-size: 11pt;
+}
+
+h2 {
+    padding-top: 1em;
+    font-size: 13pt;
+    font-weight: bold;
+}
+
+pre, pre span, code {
+    font-family: "Monaco", "DejaVu Sans Mono", Consolas !important;
+    font-size: 10pt;
+}
+
+.test_run_comment {
+    font-style: italic;
+    color: rgb(153, 77, 26);
+}
+
+</style>

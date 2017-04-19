@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="turtle-graphics">Turtle Graphics</h2>
+<p>For this assignment, you’ll use Python’s <a href="http://en.wikipedia.org/wiki/Turtle_graphics">turtle graphics</a> library module to draw interesting designs (and practice with functions).</p>
+<h4 id="part-1">Part 1</h4>
+<p>Try this in the shell:</p>
+<div class="highlight" style="background: #ffffff">
+<pre style="font-family:monospace;"><span></span><span style="color: #770000">&gt;&gt;&gt; </span><span style="color: #ff6600">from</span> turtle <span style="color: #ff6600">import</span> *
+<span style="color: #770000">&gt;&gt;&gt; </span>t = Turtle()
+<span style="color: #770000">&gt;&gt;&gt; </span>t.forward(100)
+<span style="color: #770000">&gt;&gt;&gt; </span>t.forward(100)
+</pre>
+</div>
+<p>Notice that the effect of the two calls to <span class="code" style="font-family:monospace;">forward</span> is different. The first draws a line beginning at the center of the window; the second draws a line beginning where the first left off. This illustrates a fundamental difference between the graphics programs you wrote for chapter 4 and a turtle graphics program. The turtle (represented by a triangle in the window) is an object whose <em>state</em>, dependent on past commands, determines what future commands will do. The turtle “remembers” where it is and what direction it’s pointing; it does whatever comes next relative to its current position and direction.</p>
+<p>Using the commands <span class="code" style="font-family:monospace;">reset</span>, <span class="code" style="font-family:monospace;">forward</span> and <span class="code" style="font-family:monospace;">right</span>, you can clear the window and draw a square.</p>
+<div class="highlight" style="background: #ffffff">
+<pre style="font-family:monospace;"><span></span><span style="color: #770000">&gt;&gt;&gt; </span>t.reset()
+<span style="color: #770000">&gt;&gt;&gt; </span>t.forward(100)
+<span style="color: #770000">&gt;&gt;&gt; </span>t.right(90)
+<span style="color: #770000">&gt;&gt;&gt; </span>t.forward(100)
+<span style="color: #770000">&gt;&gt;&gt; </span>t.right(90)
+<span style="color: #770000">&gt;&gt;&gt; </span>t.forward(100)
+<span style="color: #770000">&gt;&gt;&gt; </span>t.right(90)
+<span style="color: #770000">&gt;&gt;&gt; </span>t.forward(100)
+<span style="color: #770000">&gt;&gt;&gt; </span>t.right(90)
+</pre>
+</div>
+<p>If you don’t like typing so much, use a loop:</p>
+<div class="highlight" style="background: #ffffff">
+<pre style="font-family:monospace;"><span></span><span style="color: #770000">&gt;&gt;&gt; </span>t.reset()
+<span style="color: #770000">&gt;&gt;&gt; </span><span style="color: #ff6600">for</span> i <span style="color: #ff6600">in</span> <span style="color: #990099">range</span>(4):
+<span style="color: #770000">... </span>    t.forward(100)
+<span style="color: #770000">... </span>    t.right(90)
+</pre>
+</div>
+<p>What if you want to make lots of squares? Define a function. (Switch from the shell to the editor at this point.)</p>
+<div class="highlight" style="background: #ffffff">
+<pre style="font-family:monospace;"><span></span><span style="color: #cc0000"># turtle_functions.py</span>
+<span style="color: #cc0000"># David Owen</span>
+
+<span style="color: #ff6600">from</span> turtle <span style="color: #ff6600">import</span> *
+
+<span style="color: #ff6600">def</span> <span style="color: #0000ff">square</span>(turtle):
+
+    <span style="color: #ff6600">for</span> i <span style="color: #ff6600">in</span> <span style="color: #990099">range</span>(4):
+        turtle.forward(100)
+        turtle.right(90)
+
+<span style="color: #ff6600">def</span> <span style="color: #0000ff">main</span>():
+    t = Turtle()
+    t.reset()
+    square(t)
+
+<span style="color: #ff6600">if</span> __name__ == <span style="color: #009900">&quot;__main__&quot;</span>:
+    main()
+</pre>
+</div>
+<p>Notice that it’s <span class="code" style="font-family:monospace;">main</span>’s turtle—not a copy—that is affected by the code in <span class="code" style="font-family:monospace;">square</span>. <span class="code" style="font-family:monospace;">Turtle()</span> is a call to a <em>constructor</em>; it creates a new Turtle object. So <span class="code" style="font-family:monospace;">t</span> in <span class="code" style="font-family:monospace;">main</span> and <span class="code" style="font-family:monospace;">turtle</span> in <span class="code" style="font-family:monospace;">square</span> are two variables referencing the same object.</p>
+<p>Here’s another version of <span class="code" style="font-family:monospace;">square</span>. This one allows you to specify the length of a side.</p>
+<div class="highlight" style="background: #ffffff">
+<pre style="font-family:monospace;"><span></span><span style="color: #ff6600">def</span> <span style="color: #0000ff">square</span>(turtle, sideLength):
+
+    <span style="color: #ff6600">for</span> i <span style="color: #ff6600">in</span> <span style="color: #990099">range</span>(4):
+        turtle.forward(sideLength)
+        turtle.right(90)
+</pre>
+</div>
+<p>Based on this example, write a function called <span class="code" style="font-family:monospace;">triangle</span> that draws an equilateral triangle, allowing the size to be specified when the function is called.</p>
+<div class="highlight" style="background: #ffffff">
+<pre style="font-family:monospace;"><span></span><span style="color: #ff6600">def</span> <span style="color: #0000ff">triangle</span>(turtle, sideLength):
+
+    <span style="color: #cc0000"># Fill in code here to make the turtle</span>
+    <span style="color: #cc0000"># draw an equilateral triangle...</span>
+</pre>
+</div>
+<p>Once you get <span class="code" style="font-family:monospace;">triangle</span> working, write a function that draws a regular polygon:</p>
+<div class="highlight" style="background: #ffffff">
+<pre style="font-family:monospace;"><span></span><span style="color: #ff6600">def</span> <span style="color: #0000ff">polygon</span>(turtle, numSides, sideLength):
+
+    <span style="color: #cc0000"># Fill in code here to make the turtle</span>
+    <span style="color: #cc0000"># draw a regular polygon...</span>
+</pre>
+</div>
+<h4 id="part-2">Part 2</h4>
+<p>If you look up turtle graphics (or <a href="http://en.wikipedia.org/wiki/Logo_(programming_language)">Logo</a>, the programming language first used for turtle graphics) online, you will probably see a star that looks something like this:</p>
+<p>(star.png goes here.)</p>
+<p>It’s a bunch of squares…draw one, turn, draw another, turn…until the turtle’s gone all the way around the circle. As explained above, you can use a loop to draw a square. You can use a “nested” loop, that is, a loop inside another loop, to draw a star made out of squares:</p>
+<div class="highlight" style="background: #ffffff">
+<pre style="font-family:monospace;"><span></span><span style="color: #ff6600">for</span> i <span style="color: #ff6600">in</span> <span style="color: #990099">range</span>(18):
+
+    <span style="color: #ff6600">for</span> j <span style="color: #ff6600">in</span> <span style="color: #990099">range</span>(4):
+        t.forward(100)
+        t.right(90)
+        
+    t.right(20)
+</pre>
+</div>
+<p>Better yet, you can use your <span class="code" style="font-family:monospace;">square</span> function inside a loop:</p>
+<div class="highlight" style="background: #ffffff">
+<pre style="font-family:monospace;"><span></span><span style="color: #ff6600">for</span> i <span style="color: #ff6600">in</span> <span style="color: #990099">range</span>(18):
+    square(t, 100)
+    t.right(20)
+</pre>
+</div>
+<p>Based on these examples, write a function called <span class="code" style="font-family:monospace;">polygonStar</span>:</p>
+<div class="highlight" style="background: #ffffff">
+<pre style="font-family:monospace;"><span></span><span style="color: #ff6600">def</span> <span style="color: #0000ff">polygonStar</span>(turtle, numPolygons, numSides, sideLength):
+
+    <span style="color: #cc0000"># Draw a Logo-esque star design made out</span>
+    <span style="color: #cc0000"># of polygons...</span>
+</pre>
+</div>
+<h4 id="part-3">Part 3</h4>
+<p>In addition to position and direction, you can change a turtle’s state so that it moves without drawing or draws different colored lines. Read through the following code (don’t run it yet!) and try to predict what it will do. For each line, think about whether that line might change the turtle’s state, tell it to do something, or both.</p>
+<div class="highlight" style="background: #ffffff">
+<pre style="font-family:monospace;"><span></span><span style="color: #ff6600">for</span> i <span style="color: #ff6600">in</span> <span style="color: #990099">range</span>(10):
+    t.penup()
+    t.forward(100)
+    t.right(90)
+    t.pendown()
+    t.pencolor(<span style="color: #009900">&quot;red&quot;</span>)
+    t.forward(100)
+    t.right(90)
+    t.pencolor(<span style="color: #009900">&quot;blue&quot;</span>)
+    t.forward(50)
+    t.penup()
+    t.forward(50)
+    t.right(90)
+    t.forward(100)
+    t.right(90)
+    t.right(36)
+</pre>
+</div>
+<p>Using a combination of pen commands, drawing commands and turning commands, create your own interesting image(s) to share with the class. (Feel free also to experiment with any other commands you read about on <a href="http://docs.python.org/release/3k/library/turtle.html">the documentation page for Python’s turtle module</a>.)</p>
+<p>Be ready to show off one or two of your best images at the beginning of the next class (for participation points).</p>
+</body>
+</html>
+

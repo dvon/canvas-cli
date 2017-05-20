@@ -48,7 +48,7 @@ ALL_FILES_IN_FEEDBACK_PDF = False
         # Rather than including one random source code sample in
         # feedback PDF, include all submitted source code files.
 
-NO_FILES_IN_FEEDBACK_PDF = False
+NO_FILES_IN_FEEDBACK_PDF = not False
         # Rather than including one random source code sample in
         # feedback PDF, don't include any.
 
@@ -77,7 +77,10 @@ FILES_TO_ALWAYS_SKIP = ['graphics.py', 'StdOut.java', 'StdIn.java',
         'StdAudio.java', 'StdStats.java', 'StdArrayIO.java',
         'StdDraw.java', 'AA_Tester.java', 'Draw.java',
         'DrawListener.java', 'In.java', 'Out.java',
-        'Picture.java']
+        'Picture.java', 'ChordTest.java', 'ChordFun.java',
+        'NoteTest.java', 'Note.java', 'OrangeWindowA.java',
+        'OrangeWindowB.java', 'ComplexNumberTest.java',
+        'MandelbrotVisualizationA.java', 'csapp.c', 'csapp.h']
         # Skip these files when choosing source code samples to
         # include in feedback file.
 
@@ -105,6 +108,9 @@ KEEP_FEEDBACK_HTML = False
         # feedback PDFs (using wkhtmltopdf).
 
 NOTES_FILE = 'notes.txt'
+        #
+
+ESCAPE_BAD_CHARS = True
         #
 
 QUIZ_TIME_LIMIT = 10
@@ -578,6 +584,13 @@ def download_submission(course_id, assignment, student_name,
                     src = src.encode('ascii', 'replace').decode()
 
                 src = src.replace('\t', '    ')
+                
+                if ESCAPE_BAD_CHARS:
+                    src = src.replace('%', '\\%')
+                    # src = src.replace('>', '\\&gt;')
+                    # src = src.replace('>', '\\textgreater')
+                    src = src.replace('&', '\\&')
+                
                 lang = ''
 
                 for k, v in RECOGNIZED_SRC_EXTENSIONS.items():
@@ -658,20 +671,30 @@ def get_notes(d, notes):
             while notes[d][f][i - 1] == '\\':
                 i = notes[d][f].rfind('*', 0, i - 1) + 1
 
+            c = notes[d][f][i:j]
+            
+            if ESCAPE_BAD_CHARS:
+                c = c.replace('_', '\\_')
+                f = f.replace('_', '\\_')
+            
             if USE_WKHTMLTOPDF:
                 n += '<div class="test_run_comment">' + \
-                        '{} – {}</div>\n'.format(
-                        f, notes[d][f][i:j])
+                        '{} – {}</div>\n'.format(f, c)
             else:
                 n += '\\textsf{\\textit{\\color[rgb]{' + \
                         TEST_RUNS_NOTE_COLOR + '} ' + \
-                        f.replace('_', '\\_') + \
-                        ' – ' + notes[d][f][i:j] + '\\\\}}\n'
+                        f + ' – ' + c + '\\\\}}\n'
 
     if n == '':
         n = '\\textsf{\\textit{\\color[rgb]{' + \
                 TEST_RUNS_NOTE_COLOR + '} ' + \
                 '(Everything looks good.)\\\\}}\n'
+
+    if ESCAPE_BAD_CHARS:
+        n = n.replace('%', '\\%')
+        # n = n.replace('>', '\\&gt;')
+        # n = n.replace('>', '\\textgreater')
+        n = n.replace('&', '\\&')
 
     return n
 

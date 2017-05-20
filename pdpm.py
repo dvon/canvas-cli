@@ -16,7 +16,7 @@ INLINE_STYLES = True
 HTML_FOR_CANVAS = True
 ADD_CANVAS_CSS = not True
 ADD_CIS487_CSS = not True
-MATHJAX = True 
+MATHJAX_OR_MATHML = True
 DEFAULT_OUTPUT = 'html'
 DEFAULT_STYLE = 'trac'
 PYTHON_STYLE = 'idle'
@@ -38,7 +38,7 @@ SLIDES_COMMAND = 'pandoc -s -S -t dzslides --no-highlight \
 
 if HTML_FOR_CANVAS:
     INLINE_STYLES = True
-    MATHJAX = False
+    # MATHJAX = False
 
 if ADD_CANVAS_CSS:
     HTML_COMMAND += ' -c canvas.css'
@@ -46,9 +46,13 @@ if ADD_CANVAS_CSS:
 if ADD_CIS487_CSS:
     HTML_COMMAND += ' -c ../cis487.css'
 
-if MATHJAX:
-    HTML_COMMAND += ' --mathjax'
-    SLIDES_COMMAND += ' --mathjax'
+if MATHJAX_OR_MATHML:
+    if HTML_FOR_CANVAS:
+        HTML_COMMAND += ' --mathml'
+        SLIDES_COMMAND += ' --mathml'
+    else:
+        HTML_COMMAND += ' --mathjax'
+        SLIDES_COMMAND += ' --mathjax'
 
 if USE_DZSLIDES_TEMPLATE:
     SLIDES_COMMAND += ' --template=pdpm.dzslides'
@@ -196,9 +200,13 @@ def pygmentize(md, out_format, md_is_filename=True, ext='txt'):
 def html_canvas_fixes(filename):
     html = open(filename).read()
 
-    # Get rid of code tags.
+    # TODO Put this back in for non-slides html.
+    # html = html[html.find('<body>') + 6:html.find('</body>')]
+
+    # Get rid of code tags.  (Ideally pygmentize above would
+    # catch these if followed by, e.g., {.python}.)
     html = html.replace(
-        '<code>', '<span class="code" style="font-family:monospace;">')
+        '<code', '<span style="font-family:monospace;" class="code"')
     html = html.replace('</code>', '</span>')
 
     # Align table cell contents vertically to match
@@ -221,7 +229,7 @@ def html_canvas_fixes(filename):
         '<pre style="line-height: 125%">',
         '<pre style="font-family:monospace;">')
     html = html.replace('</table>', '</table>&nbsp;')
-
+    
     temp_file = open(TEMP, 'w')
     print(html, file=temp_file)
     temp_file.close()

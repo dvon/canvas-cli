@@ -20,14 +20,14 @@ TEMP = 'canvas4_py_temp'
 PER_PAGE = 100
         # Max results to return from list URLs.
 
-SHOW_UNPUBLISHED_COURSES = False
+SHOW_UNPUBLISHED_COURSES = not False
         #
 
 SHOW_ALL_ASSIGNMENTS = False
         # When prompting user for choice of assignment, show all
         # (not just those with ungraded submissions).
 
-ALWAYS_MAKE_GRADE_FILE = not False
+ALWAYS_MAKE_GRADE_FILE = False
         # When downloading (all) submissions, always create new
         # grades.txt (otherwise only creates new if grades.txt
         # doesn't exist).
@@ -48,7 +48,7 @@ ALL_FILES_IN_FEEDBACK_PDF = False
         # Rather than including one random source code sample in
         # feedback PDF, include all submitted source code files.
 
-NO_FILES_IN_FEEDBACK_PDF = not False
+NO_FILES_IN_FEEDBACK_PDF = False
         # Rather than including one random source code sample in
         # feedback PDF, don't include any.
 
@@ -123,7 +123,7 @@ DEFAULT_PTS_PER_QUIZ_QUESTION = 2
 def get_courses():
     """
     """
-    
+
     url = '{}/api/v1/courses'.format(SITE)
     values = { 'enrollment_type' : 'teacher',
                'include[]'       : 'term',
@@ -152,10 +152,10 @@ def get_courses():
         # Will get here if one of the courses doesn't end with
         # course and section numbers.
         courses.sort(key=lambda course: course['name'])
-    
+
     return courses
-    
-    
+
+
 def prompt_for_course_id():
     """
     Prompt user to choose course (from per-term courses in the
@@ -292,7 +292,7 @@ def prompt_for_student_directory():
 def prompt_for_assignment_group_id(course_id):
     """
     """
-    
+
     url = '{}/api/v1/courses/{}/assignment_groups'.format(SITE,
             course_id)
     request = urllib.request.Request(url, method='GET')
@@ -302,14 +302,14 @@ def prompt_for_assignment_group_id(course_id):
 
     print()
     i = 1
-    
+
     for group in response:
         print('{}. {}'.format(i, group['name']))
         i += 1
-    
+
     i = int(input('\nGroup number? '))
     print()
-    
+
     return response[i - 1]['id']
 
 
@@ -319,18 +319,18 @@ def check_discussions():
 
     for c in get_courses():
         print(c['name'])
-        
+
         url = '{}/api/v1/courses/{}/discussion_topics'.format(
                 SITE, c['id'])
         request = urllib.request.Request(url)
         request.add_header('Authorization', 'Bearer ' + TOKEN)
         response = urllib.request.urlopen(request)
         discussions = json.loads(response.read().decode())
-        
+
         for d in discussions:
             print('    {:40} ({} unread)'.format(d['title'],
                     d['unread_count']))
-    
+
         url = SITE + '/api/v1/announcements'
         values = { 'context_codes' : 'course_{}'.format(c['id']) }
         data = urllib.parse.urlencode(values).encode('utf-8')
@@ -338,7 +338,7 @@ def check_discussions():
         request.add_header('Authorization', 'Bearer ' + TOKEN)
         response = urllib.request.urlopen(request)
         announcements = json.loads(response.read().decode())
-    
+
         for a in announcements:
             print('    {:40} ({} unread)'.format(a['title'],
                     a['unread_count']))
@@ -584,13 +584,13 @@ def download_submission(course_id, assignment, student_name,
                     src = src.encode('ascii', 'replace').decode()
 
                 src = src.replace('\t', '    ')
-                
+
                 if ESCAPE_BAD_CHARS:
                     src = src.replace('%', '\\%')
                     # src = src.replace('>', '\\&gt;')
                     # src = src.replace('>', '\\textgreater')
                     src = src.replace('&', '\\&')
-                
+
                 lang = ''
 
                 for k, v in RECOGNIZED_SRC_EXTENSIONS.items():
@@ -648,35 +648,35 @@ def get_notes(d, notes):
 
     n = ''
     k = list(notes[d].keys())
-    
+
     try:
         def exercise_number(f):
             i = f.find('e')
-            
+
             if i == 2 or i == 3:
                 return "{:03}".format(int(f[i + 1:f.find('_')]))
             else:
                 return '000' + f
-        
+
         k.sort(key=exercise_number)
-    
+
     except ValueError:
         k.sort()
-    
+
     for f in k:
         if '*' in notes[d][f]:
             j = notes[d][f].rfind('*')
             i = notes[d][f].rfind('*', 0, j - 1) + 1
-            
+
             while notes[d][f][i - 1] == '\\':
                 i = notes[d][f].rfind('*', 0, i - 1) + 1
 
             c = notes[d][f][i:j]
-            
+
             if ESCAPE_BAD_CHARS:
                 c = c.replace('_', '\\_')
                 f = f.replace('_', '\\_')
-            
+
             if USE_WKHTMLTOPDF:
                 n += '<div class="test_run_comment">' + \
                         '{} – {}</div>\n'.format(f, c)
@@ -702,7 +702,7 @@ def get_notes(d, notes):
 def make_feedback_pdf(d, notes=False):
     """
     """
-    
+
     os.chdir(d)
     last_name = d[:d.find('_')]
 
@@ -710,7 +710,7 @@ def make_feedback_pdf(d, notes=False):
         if f.startswith(last_name) and f.endswith('.txt'):
             print('Making feedback pdf ({})...'.format(
                     f[:f.rfind('.')]))
-            
+
             if not '_notes.txt' in f:
                 if USE_WKHTMLTOPDF:
                     pg, style_defs = pygmentize(f, 'html')
@@ -734,7 +734,7 @@ def make_feedback_pdf(d, notes=False):
                 else:
                     pg, style_defs = pygmentize(
                             f.replace('_notes.txt', '.txt'), 'pdf')
-                    
+
                 shutil.copy(f, TEMP)
 
             if USE_WKHTMLTOPDF:
@@ -763,7 +763,7 @@ def make_feedback_pdf(d, notes=False):
                 shutil.copy(TEMP, f.replace('.txt', '_notes.txt'))
             elif not KEEP_FEEDBACK_MD:
                 os.remove(f)
-                
+
             os.remove(TEMP)
 
             if MOVE_PDFS_UP_DIR:
@@ -912,7 +912,7 @@ def new_page(filename, slides=False):
 
     if filename.endswith('.txt'):
         first_line = md[:md.find('\n')]
-        
+
         if first_line.startswith('#'):
             title = first_line.replace('#', '').strip()
             md = md[md.find('\n') + 1:]
@@ -979,7 +979,7 @@ def new_page(filename, slides=False):
     ht = open(TEMP + '.html').read()
     os.remove(TEMP)
     os.remove(TEMP + '.html')
-    
+
     values = { 'wiki_page[title]' : title,
                'wiki_page[body]'  : ht }
     data = urllib.parse.urlencode(values).encode('utf-8')
@@ -991,7 +991,14 @@ def new_page(filename, slides=False):
         request = urllib.request.Request(url, data)
 
     request.add_header('Authorization', 'Bearer ' + TOKEN)
-    urllib.request.urlopen(request)
+    response = urllib.request.urlopen(request)
+    
+    if input('Create event? ') != '':
+        response = json.loads(response.read().decode())
+        description = \
+                '<a href="/courses/{}/pages/{}">{}</a>'.format(
+                course_id, response['url'], title)
+        new_event(course_id, title, description)
 
 
 def new_assignment(filename):
@@ -1023,16 +1030,16 @@ def new_assignment(filename):
     ht = open(TEMP + '.html').read()
     os.remove(TEMP)
     os.remove(TEMP + '.html')
-   
+
     due_at = input('Date due? (YYYY-MM-DD) (blank): ')
     due_at += 'T' + input('Time? (24-hr HH:MM) (blank): ') + ':00'
     pts = input('Points (blank): ')
-    
+
     if pts == '' or pts == '0':
         pts = False
     else:
         pts = int(pts)
-    
+
     exts = input('File upload extenstions? (blank): ')
 
     # Check for existing assignment with the same title.  If so,
@@ -1093,6 +1100,107 @@ def new_assignment(filename):
 
     request.add_header('Authorization', 'Bearer ' + TOKEN)
     urllib.request.urlopen(request)
+
+
+def new_event(course_id, title, description):
+    """
+    """
+
+    date = input('Date? (YYYY-MM-DD) (blank): ')
+
+    if date != '':
+        start_at = input('Start? (24-hr HH:MM) (blank): ')
+
+        if start_at != '':
+            end_at = input('End? (24-hr HH:MM) (start + 1 hr): ')
+
+            if end_at == '':
+                end_at = str(int(start_at[:2]) + 1) + start_at[2:]
+
+            start_at = date + 'T' + start_at + ':00'
+            end_at = date + 'T' + end_at + ':00'
+
+    # Check for existing event with the same title.  If so,
+    # update it instead of creating a new event.
+    url = '{}/api/v1/calendar_events'.format(SITE)
+    values = { 'per_page'   : PER_PAGE,
+               'undated'    : True,
+               'all_events' : True,
+               'context_codes[]' : 'course_' + course_id }
+    data = urllib.parse.urlencode(values).encode('utf-8')
+    request = urllib.request.Request(url, data, method='GET')
+    request.add_header('Authorization', 'Bearer ' + TOKEN)
+    response = urllib.request.urlopen(request)
+    response = json.loads(response.read().decode())
+    update = False
+
+    for event in response:
+        if event['title'] == title:
+            event_id = event['id']
+            update = True
+
+    d = datetime.datetime.now()
+    created_at = '{}-{:02}-{:02}T{:02}:{:02}:00'.format(
+            d.year, d.month, d.day, d.hour, d.minute)
+    url = '{}/api/v1/calendar_events'.format(SITE)
+    values = { 'calendar_event[context_code]' : 'course_' + course_id,
+               'calendar_event[title]'        : title,
+               'calendar_event[description]'  : description,
+               'calendar_event[created_at]'   : created_at }
+
+    if date != '':
+        if start_at != '':
+            values['calendar_event[start_at]'] = start_at
+            values['calendar_event[end_at]'] = end_at
+        elif not update:
+            values['calendar_event[start_at]'] = date + 'T08:00:00'
+            values['calendar_event[end_at]'] = date + 'T08:00:00'
+            values['calendar_event[all_day_date]'] = date
+            values['calendar_event[all_day]'] = True
+
+    data = urllib.parse.urlencode(values).encode('utf-8')
+
+    if update:
+        request = urllib.request.Request('{}/{}'.format(url,
+                event_id), data, method='PUT')
+    else:
+        request = urllib.request.Request(url, data)
+
+    request.add_header('Authorization', 'Bearer ' + TOKEN)
+    urllib.request.urlopen(request)
+
+
+
+def new_event_from_file(filename):
+    """
+    """
+
+    course_id = prompt_for_course_id()
+    title = input('Title? (from file): ')
+    md = open(filename).read()
+
+    if title == '':
+        first_line = md[:md.find('\n')]
+
+        if first_line.startswith('#'):
+            title = first_line.replace('#', '').strip()
+            md = md[md.find('\n') + 1:]
+        else:
+            title = os.path.basename(filename)
+            title = title[:title.rfind('.')]
+            title = title.replace('_', ' ')
+            title = title.replace('-', ' ').title()
+
+    pg, style_defs = pygmentize(md, 'html', False)
+    f = open(TEMP, 'w')
+    print(pg, file=f)
+    f.close()
+    run_pandoc(TEMP, TEMP + '.html', 'html', True, style_defs)
+    description = open(TEMP + '.html').read()
+    os.remove(TEMP)
+    os.remove(TEMP + '.html')
+
+    new_event(course_id, title, description)
 
 
 class QuizParser(html.parser.HTMLParser):
@@ -1316,7 +1424,7 @@ if __name__ == '__main__':
                 notes = eval(open(NOTES_FILE).read())
             except FileNotFoundError:
                 pass
-    
+
         make_feedback_pdf(prompt_for_student_directory(), notes)
 
     elif sys.argv[1] == '-ua':
@@ -1353,6 +1461,9 @@ if __name__ == '__main__':
 
     elif sys.argv[1] == '-c':
         check_discussions()
+
+    elif sys.argv[1] == '-e':
+        new_event_from_file(sys.argv[2])
 
     elif len(sys.argv) > 1:
         print("I don't understand {} :(".format(sys.argv[1]))

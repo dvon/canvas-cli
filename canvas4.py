@@ -5,6 +5,7 @@ import html.parser
 import json
 import os.path
 import random
+import re
 import shutil
 import sys
 import urllib.parse
@@ -1171,36 +1172,48 @@ def new_event(course_id, title, description):
 
 
 
-def new_event_from_file(filename):
+def new_events_from_file(filename):
     """
     """
 
     course_id = prompt_for_course_id()
-    title = input('Title? (from file): ')
     md = open(filename).read()
+    events = re.split(r'#+', md)
+    
+    for e in events:
+        if len(events) == 1:
+            title = input('Title? (from file): ')
+    
+            if title == '':
+                first_line = md[:md.find('\n')]
 
-    if title == '':
-        first_line = md[:md.find('\n')]
+                if first_line.startswith('#'):
+                    title = first_line.replace('#', '').strip()
+                    md = md[md.find('\n') + 1:]
+                else:
+                    title = os.path.basename(filename)
+                    title = title[:title.rfind('.')]
+                    title = title.replace('_', ' ')
+                    title = title.replace('-', ' ').title()
 
-        if first_line.startswith('#'):
-            title = first_line.replace('#', '').strip()
-            md = md[md.find('\n') + 1:]
+            pg, style_defs = pygmentize(md, 'html', False)
+        
         else:
-            title = os.path.basename(filename)
-            title = title[:title.rfind('.')]
-            title = title.replace('_', ' ')
-            title = title.replace('-', ' ').title()
+            i = e.find('\n')
+            t, d = e[:i], e[i + 1:]
+            title = input('Title? ({}): '.format(t))
 
-    pg, style_defs = pygmentize(md, 'html', False)
-    f = open(TEMP, 'w')
-    print(pg, file=f)
-    f.close()
-    run_pandoc(TEMP, TEMP + '.html', 'html', True, style_defs)
-    description = open(TEMP + '.html').read()
-    os.remove(TEMP)
-    os.remove(TEMP + '.html')
+            pg, style_defs = pygmentize(d, 'html', False)
 
-    new_event(course_id, title, description)
+        f = open(TEMP, 'w')
+        print(pg, file=f)
+        f.close()
+        run_pandoc(TEMP, TEMP + '.html', 'html', True, style_defs)
+        description = open(TEMP + '.html').read()
+        os.remove(TEMP)
+        os.remove(TEMP + '.html')
+
+        new_event(course_id, title, description)
 
 
 class QuizParser(html.parser.HTMLParser):
@@ -1463,7 +1476,7 @@ if __name__ == '__main__':
         check_discussions()
 
     elif sys.argv[1] == '-e':
-        new_event_from_file(sys.argv[2])
+        new_events_from_file(sys.argv[2])
 
     elif len(sys.argv) > 1:
         print("I don't understand {} :(".format(sys.argv[1]))

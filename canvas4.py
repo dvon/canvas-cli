@@ -1179,31 +1179,23 @@ def new_events_from_file(filename):
     course_id = prompt_for_course_id()
     md = open(filename).read()
     events = re.split(r'#+', md)
-    
-    for e in events:
-        if len(events) == 1:
-            title = input('Title? (from file): ')
-    
-            if title == '':
-                first_line = md[:md.find('\n')]
+   
+    if len(events) <= 2:
+        title = input('\nTitle? (from file): ')
 
-                if first_line.startswith('#'):
-                    title = first_line.replace('#', '').strip()
-                    md = md[md.find('\n') + 1:]
-                else:
-                    title = os.path.basename(filename)
-                    title = title[:title.rfind('.')]
-                    title = title.replace('_', ' ')
-                    title = title.replace('-', ' ').title()
+        if title == '':
+            first_line = md[:md.find('\n')]
 
-            pg, style_defs = pygmentize(md, 'html', False)
-        
-        else:
-            i = e.find('\n')
-            t, d = e[:i], e[i + 1:]
-            title = input('Title? ({}): '.format(t))
+            if first_line.startswith('#'):
+                title = first_line.replace('#', '').strip()
+                md = md[md.find('\n') + 1:]
+            else:
+                title = os.path.basename(filename)
+                title = title[:title.rfind('.')]
+                title = title.replace('_', ' ')
+                title = title.replace('-', ' ').title()
 
-            pg, style_defs = pygmentize(d, 'html', False)
+        pg, style_defs = pygmentize(md, 'html', False)
 
         f = open(TEMP, 'w')
         print(pg, file=f)
@@ -1214,6 +1206,24 @@ def new_events_from_file(filename):
         os.remove(TEMP + '.html')
 
         new_event(course_id, title, description)
+
+    else: # TODO multiple events from one file still not working :(
+        for e in events[1:]:
+            i = e.find('\n')
+            t, description = e[:i].strip(), e[i + 1:]
+            title = input('\nTitle? ({}): '.format(t))
+
+            pg, style_defs = pygmentize(description, 'html', False)
+
+            f = open(TEMP, 'w')
+            print(pg, file=f)
+            f.close()
+            run_pandoc(TEMP, TEMP + '.html', 'html', True, style_defs)
+            description = open(TEMP + '.html').read()
+            os.remove(TEMP)
+            os.remove(TEMP + '.html')
+
+            new_event(course_id, title, description)
 
 
 class QuizParser(html.parser.HTMLParser):

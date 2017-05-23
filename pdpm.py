@@ -38,7 +38,6 @@ SLIDES_COMMAND = 'pandoc -s -S -t dzslides --no-highlight \
 
 if HTML_FOR_CANVAS:
     INLINE_STYLES = True
-    # MATHJAX = False
 
 if ADD_CANVAS_CSS:
     HTML_COMMAND += ' -c canvas.css'
@@ -49,10 +48,10 @@ if ADD_CIS487_CSS:
 if MATHJAX_OR_MATHML:
     if HTML_FOR_CANVAS:
         HTML_COMMAND += ' --mathml'
-        SLIDES_COMMAND += ' --mathml'
     else:
         HTML_COMMAND += ' --mathjax'
-        SLIDES_COMMAND += ' --mathjax'
+
+    SLIDES_COMMAND += ' --mathjax'
 
 if USE_DZSLIDES_TEMPLATE:
     SLIDES_COMMAND += ' --template=pdpm.dzslides'
@@ -197,11 +196,11 @@ def pygmentize(md, out_format, md_is_filename=True, ext='txt'):
     return '\n'.join(pd_new), style_defs_for_pdf
 
 
-def html_canvas_fixes(filename):
+def html_canvas_fixes(filename, slides=False):
     html = open(filename).read()
 
-    # TODO Put this back in for non-slides html.
-    # html = html[html.find('<body>') + 6:html.find('</body>')]
+    if not slides:
+        html = html[html.find('<body>') + 6:html.find('</body>')]
 
     # Get rid of code tags.  (Ideally pygmentize above would
     # catch these if followed by, e.g., {.python}.)
@@ -246,7 +245,7 @@ def run_pandoc(in_filename, out_filename, out_format,
         # os.remove(in_filename)
         
         if canvas_fixes:
-            html_canvas_fixes(out_filename)
+            html_canvas_fixes(out_filename, slides=True)
 
     elif out_format == 'html':
         subprocess.call(HTML_COMMAND.split() + options.split() +

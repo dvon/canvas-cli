@@ -1210,10 +1210,13 @@ def new_events_from_file(filename):
     else: # TODO multiple events from one file still not working :(
         for e in events[1:]:
             i = e.find('\n')
-            t, description = e[:i].strip(), e[i + 1:]
+            t, md = e[:i].strip(), e[i + 1:]
             title = input('\nTitle? ({}): '.format(t))
 
-            pg, style_defs = pygmentize(description, 'html', False)
+            if title == '':
+                title = t
+
+            pg, style_defs = pygmentize(md, 'html', False)
 
             f = open(TEMP, 'w')
             print(pg, file=f)

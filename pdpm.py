@@ -29,6 +29,7 @@ USE_DZSLIDES_TEMPLATE = not True
 DEBUG_PDFLATEX = not False
 XELATEX = False
 DELETE_HLINES = True
+USE_WKHTMLTOPDF = not True
 
 TEMP = 'pdpm_py_temp'
 
@@ -242,7 +243,6 @@ def run_pandoc(in_filename, out_filename, out_format,
     if out_format == 'slides':
         subprocess.call(SLIDES_COMMAND.split() + options.split() +
                         [in_filename, '-o', out_filename])
-        # os.remove(in_filename)
         
         if canvas_fixes:
             html_canvas_fixes(out_filename, slides=True)
@@ -250,7 +250,6 @@ def run_pandoc(in_filename, out_filename, out_format,
     elif out_format == 'html':
         subprocess.call(HTML_COMMAND.split() + options.split() +
                         [in_filename, '-o', out_filename])
-        # os.remove(in_filename)
         
         if canvas_fixes:
             html_canvas_fixes(out_filename)
@@ -258,7 +257,6 @@ def run_pandoc(in_filename, out_filename, out_format,
     else:  # pdf
         subprocess.call(PDF_COMMAND.split() + options.split() +
                         [in_filename, '-o', 'temp.tex'])
-        # os.remove(in_filename)
 
         try:
             tex = open('temp.tex').read()
@@ -361,4 +359,3 @@ if __name__ == '__main__':
 
     run_pandoc(TEMP, out_filename, out_format,
                HTML_FOR_CANVAS, style_defs_for_pdf)
-    # os.remove(TEMP)

@@ -173,6 +173,8 @@ $endfor$
 \DeclareCaptionLabelFormat{nolabel}{}
 \captionsetup{labelformat=nolabel}
 
+\usepackage{xfrac}
+
 %%%%%%%%%%
 
 $if(title)$

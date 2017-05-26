@@ -56,8 +56,8 @@ if MATHJAX_OR_MATHML:
 if USE_DZSLIDES_TEMPLATE:
     SLIDES_COMMAND += ' --template=pdpm.dzslides'
 
-FONTSIZE = 10
-MARGIN = 0.8
+FONTSIZE = 11
+MARGIN = 0.9
 PDF_COMMAND = 'pandoc -V fontsize=' + str(FONTSIZE) + \
         'pt -V margin=' + str(MARGIN) + 'in'
 

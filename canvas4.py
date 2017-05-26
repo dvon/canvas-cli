@@ -1103,12 +1103,18 @@ def new_assignment(filename):
     urllib.request.urlopen(request)
 
 
-def new_event(course_id, title, description):
+def new_event(course_id, title, description, date=''):
     """
     """
 
-    date = input('Date? (YYYY-MM-DD) (blank): ')
-
+    if date == '':
+        date = input('Date? (YYYY-MM-DD) (blank): ')
+    else:
+        d = input('Date? (YYYY-MM-DD) ({}): '.format(date))
+        
+        if d != '':
+            date = d
+ 
     if date != '':
         start_at = input('Start? (24-hr HH:MM) (blank): ')
 
@@ -1170,6 +1176,7 @@ def new_event(course_id, title, description):
     request.add_header('Authorization', 'Bearer ' + TOKEN)
     urllib.request.urlopen(request)
 
+    return date
 
 
 def new_events_from_file(filename):
@@ -1208,6 +1215,8 @@ def new_events_from_file(filename):
         new_event(course_id, title, description)
 
     else: # TODO multiple events from one file still not working :(
+        d = ''
+    
         for e in events[1:]:
             i = e.find('\n')
             t, md = e[:i].strip(), e[i + 1:]
@@ -1226,7 +1235,7 @@ def new_events_from_file(filename):
             os.remove(TEMP)
             os.remove(TEMP + '.html')
 
-            new_event(course_id, title, description)
+            d = new_event(course_id, title, description, date=d)
 
 
 class QuizParser(html.parser.HTMLParser):

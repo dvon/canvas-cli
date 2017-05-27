@@ -994,7 +994,9 @@ def new_page(filename, slides=False):
     request.add_header('Authorization', 'Bearer ' + TOKEN)
     response = urllib.request.urlopen(request)
     
-    if input('Create event? ') != '':
+    a = input('Create event? ')
+    
+    if (not a.lower().startswith('n')) and (a != ''):
         response = json.loads(response.read().decode())
         description = \
                 '<a href="/courses/{}/pages/{}">{}</a>'.format(
@@ -1214,7 +1216,7 @@ def new_events_from_file(filename):
 
         new_event(course_id, title, description)
 
-    else: # TODO multiple events from one file still not working :(
+    else:
         d = ''
     
         for e in events[1:]:

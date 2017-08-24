@@ -173,7 +173,20 @@ $endfor$
 \DeclareCaptionLabelFormat{nolabel}{}
 \captionsetup{labelformat=nolabel}
 
+% For little diagonal fractions in text (with \sfrac).
 \usepackage{xfrac}
+
+% For "gray," not provided with color package.
+\usepackage{xcolor}
+
+% For letterhead...
+% \usepackage[dvipsnames]{color}
+% \usepackage{wallpaper}
+% \ThisULCornerWallPaper{1}{letterhead}
+
+% For spacing between paragraphs within enumerate.
+\usepackage{enumitem}
+\setlist[enumerate]{parsep=\parskip}
 
 %%%%%%%%%%
 

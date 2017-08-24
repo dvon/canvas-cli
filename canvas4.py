@@ -4,6 +4,7 @@ import datetime
 import html.parser
 import json
 import os.path
+import pprint
 import random
 import re
 import shutil
@@ -85,7 +86,7 @@ FILES_TO_ALWAYS_SKIP = ['graphics.py', 'StdOut.java', 'StdIn.java',
         # Skip these files when choosing source code samples to
         # include in feedback file.
 
-KEEP_FEEDBACK_MD = False
+KEEP_FEEDBACK_MD = not False
         # Don't delete Markdown (.txt) files created when
         # generating feedback PDFs.
 
@@ -329,8 +330,11 @@ def check_discussions():
         discussions = json.loads(response.read().decode())
 
         for d in discussions:
-            print('    {:40} ({} unread)'.format(d['title'],
-                    d['unread_count']))
+            if d['unread_count'] != 0:
+                print('    {:40} ({} unread)'.format(d['title'],
+                        d['unread_count']))
+            else:
+                print('    {:40}'.format(d['title']))
 
         url = SITE + '/api/v1/announcements'
         values = { 'context_codes' : 'course_{}'.format(c['id']) }
@@ -341,8 +345,11 @@ def check_discussions():
         announcements = json.loads(response.read().decode())
 
         for a in announcements:
-            print('    {:40} ({} unread)'.format(a['title'],
-                    a['unread_count']))
+            if d['unread_count'] != 0:
+                print('    {:40} ({} unread)'.format(a['title'],
+                        a['unread_count']))
+            else:
+                print('    {:40}'.format(a['title']))
 
 
 def unzip(filename, delete=False, copy_to_zip_dir=False):
@@ -841,7 +848,7 @@ def upload(filename, url, folder=False, timestamp_folder=False):
         lines.append(value)
 
     lines.append('--' + boundary)
-    lines.append('Content-Disposition: form-data; name="file"; ' +
+    lines.append('Content-Disposition: form-data; name="file"; '
             'filename="{}"'.format(filename))
     lines.append('')
     lines.append('')
@@ -1181,6 +1188,21 @@ def new_event(course_id, title, description, date=''):
     return date
 
 
+def page_views(course_id, student_id):
+    """
+    """
+    url = '{}/api/v1/courses/{}/analytics/users/{}/activity'.format(
+            SITE, course_id, student_id)
+    # print(url)
+    # values = { 'student_id' : student_id }
+    # data = urllib.parse.urlencode(values).encode('utf-8')
+    request = urllib.request.Request(url)
+    request.add_header('Authorization', 'Bearer ' + TOKEN)
+    response = urllib.request.urlopen(request)
+    response = json.loads(response.read().decode())
+    pprint.pprint(response['page_views'])
+
+
 def new_events_from_file(filename):
     """
     """
@@ -1251,7 +1273,7 @@ class QuizParser(html.parser.HTMLParser):
 
     def handle_starttag(self, tag, attrs):
 
-        if tag == 'h2':
+        if tag == 'h1' or tag == 'h2':
             self.keep = ''
 
         elif tag == 'ol':
@@ -1298,7 +1320,7 @@ class QuizParser(html.parser.HTMLParser):
 
     def handle_endtag(self, tag):
 
-        if tag == 'h2':
+        if tag == 'h1' or tag == 'h2':
             self.course_id = prompt_for_course_id()
 
             url = '{}/api/v1/courses/{}/quizzes/'.format(
@@ -1411,7 +1433,7 @@ class QuizParser(html.parser.HTMLParser):
         i = self.keep.find(' pts)')
 
         if i == -1:
-            return DEFAULT_POINTS
+            return DEFAULT_PTS_PER_QUIZ_QUESTION
 
         else:
             j = self.keep.rfind('(', 0, i)
@@ -1498,6 +1520,11 @@ if __name__ == '__main__':
 
     elif sys.argv[1] == '-c':
         check_discussions()
+
+    elif sys.argv[1] == '-v':
+        course_id = prompt_for_course_id()
+        student = prompt_for_student(course_id)
+        page_views(course_id, student[0])
 
     elif sys.argv[1] == '-e':
         new_events_from_file(sys.argv[2])

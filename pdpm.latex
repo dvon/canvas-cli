@@ -150,7 +150,7 @@ $endfor$
 \fi
 \hypersetup{pdfpagemode=UseNone}         % Hide pdf index.
 \renewcommand\UrlFont{\rmfamily}         % Use serif font for links.
-\newcommand{\pause}{}                    % Ignore beamer \pause command.
+\newcommand{\pause}{}                    % Ignore beamer pause command.
 
 % Control ellipsis spacing
 \usepackage{ellipsis}

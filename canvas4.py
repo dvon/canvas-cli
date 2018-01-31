@@ -25,7 +25,7 @@ PER_PAGE = 100
 SHOW_UNPUBLISHED_COURSES = not False
         #
 
-SHOW_ALL_ASSIGNMENTS = False
+SHOW_ALL_ASSIGNMENTS = not False
         # When prompting user for choice of assignment, show all
         # (not just those with ungraded submissions).
 
@@ -50,7 +50,7 @@ ALL_FILES_IN_FEEDBACK_PDF = False
         # Rather than including one random source code sample in
         # feedback PDF, include all submitted source code files.
 
-NO_FILES_IN_FEEDBACK_PDF = False
+NO_FILES_IN_FEEDBACK_PDF = not False
         # Rather than including one random source code sample in
         # feedback PDF, don't include any.
 
@@ -72,7 +72,7 @@ EXCLUDED_EXTENSIONS = ['txt', 'zip', 'jpg', 'jpeg', 'png', 'docx',
         # random source code sample to include in feedback file.
 
 RECOGNIZED_SRC_EXTENSIONS = { '.py' : 'python', '.java': 'java',
-        '.c' : 'c', '.pde' : 'processing' }
+        '.c' : 'c', '.pde' : 'processing', '.js' : 'javascript' }
         # File extensions recognized as being source code.
 
 FILES_TO_ALWAYS_SKIP = ['graphics.py', 'StdOut.java', 'StdIn.java',
@@ -560,8 +560,8 @@ def download_submission(course_id, assignment, student_name,
         for attachment in attachments:
             download_attachment(attachment, student_name)
 
-        f = open('{} ({}).txt'.format(student_name,
-                assignment['name']), 'w')
+        f = open("{} ({}).txt".format(student_name,
+                assignment['name']).replace('/', '\\'), 'w')
 
         if late:
             print('SUBMITTED LATE\n\n', file=f)
@@ -874,7 +874,7 @@ def upload_feedback(course_id, assignment, student_name,
     """
 
     filename = '{} ({}).pdf'.format(student_name,
-            assignment['name'])
+            assignment['name']).replace('/', '\\')
 
     if os.path.exists(filename):
         print('Uploading feedback PDF ({})...'.format(
@@ -1065,7 +1065,7 @@ def new_assignment(filename):
     update = False
 
     for assignment in response:
-        if assignment['name'] == title:
+        if assignment['name'] == title.replace('/', '\\'):
             assignment_id = assignment['id']
             update = True
 
@@ -1138,22 +1138,24 @@ def new_event(course_id, title, description, date=''):
 
     # Check for existing event with the same title.  If so,
     # update it instead of creating a new event.
-    url = '{}/api/v1/calendar_events'.format(SITE)
-    values = { 'per_page'   : PER_PAGE,
-               'undated'    : True,
-               'all_events' : True,
-               'context_codes[]' : 'course_' + course_id }
-    data = urllib.parse.urlencode(values).encode('utf-8')
-    request = urllib.request.Request(url, data, method='GET')
-    request.add_header('Authorization', 'Bearer ' + TOKEN)
-    response = urllib.request.urlopen(request)
-    response = json.loads(response.read().decode())
     update = False
 
-    for event in response:
-        if event['title'] == title:
-            event_id = event['id']
-            update = True
+    if not (title in ('Lab', 'Quiz', 'Review')):
+        url = '{}/api/v1/calendar_events'.format(SITE)
+        values = { 'per_page'   : PER_PAGE,
+                   'undated'    : True,
+                   'all_events' : True,
+                   'context_codes[]' : 'course_' + course_id }
+        data = urllib.parse.urlencode(values).encode('utf-8')
+        request = urllib.request.Request(url, data, method='GET')
+        request.add_header('Authorization', 'Bearer ' + TOKEN)
+        response = urllib.request.urlopen(request)
+        response = json.loads(response.read().decode())
+
+        for event in response:
+            if event['title'] == title:
+                event_id = event['id']
+                update = True
 
     d = datetime.datetime.now()
     created_at = '{}-{:02}-{:02}T{:02}:{:02}:00'.format(
@@ -1214,40 +1216,18 @@ def new_events_from_file(filename):
     if len(events) <= 2:
         title = input('\nTitle? (from file): ')
 
-        if title == '':
-            first_line = md[:md.find('\n')]
-
-            if first_line.startswith('#'):
-                title = first_line.replace('#', '').strip()
-                md = md[md.find('\n') + 1:]
-            else:
-                title = os.path.basename(filename)
-                title = title[:title.rfind('.')]
-                title = title.replace('_', ' ')
-                title = title.replace('-', ' ').title()
-
-        pg, style_defs = pygmentize(md, 'html', False)
-
-        f = open(TEMP, 'w')
-        print(pg, file=f)
-        f.close()
-        run_pandoc(TEMP, TEMP + '.html', 'html', True, style_defs)
-        description = open(TEMP + '.html').read()
-        os.remove(TEMP)
-        os.remove(TEMP + '.html')
-
-        new_event(course_id, title, description)
-
-    else:
-        d = ''
-    
-        for e in events[1:]:
-            i = e.find('\n')
-            t, md = e[:i].strip(), e[i + 1:]
-            title = input('\nTitle? ({}): '.format(t))
-
+        if not (title in ('-', 'skip')):
             if title == '':
-                title = t
+                first_line = md[:md.find('\n')]
+
+                if first_line.startswith('#'):
+                    title = first_line.replace('#', '').strip()
+                    md = md[md.find('\n') + 1:]
+                else:
+                    title = os.path.basename(filename)
+                    title = title[:title.rfind('.')]
+                    title = title.replace('_', ' ')
+                    title = title.replace('-', ' ').title()
 
             pg, style_defs = pygmentize(md, 'html', False)
 
@@ -1259,7 +1239,35 @@ def new_events_from_file(filename):
             os.remove(TEMP)
             os.remove(TEMP + '.html')
 
-            d = new_event(course_id, title, description, date=d)
+            new_event(course_id, title, description)
+
+    else:
+        d = ''
+    
+        for e in events[1:]:
+            i = e.find('\n')
+            t, md = e[:i].strip(), e[i + 1:]
+            title = input('\nTitle? ({}): '.format(t))
+
+            if not (title in ('-', 'skip')):
+                if title == '':
+                    title = t
+
+                if md.strip() == '':
+                    description = ''
+                else:
+                    pg, style_defs = pygmentize(md, 'html', False)
+
+                    f = open(TEMP, 'w')
+                    print(pg, file=f)
+                    f.close()
+                    run_pandoc(TEMP, TEMP + '.html', 'html', True,
+                            style_defs)
+                    description = open(TEMP + '.html').read()
+                    os.remove(TEMP)
+                    os.remove(TEMP + '.html')
+
+                d = new_event(course_id, title, description, date=d)
 
 
 class QuizParser(html.parser.HTMLParser):

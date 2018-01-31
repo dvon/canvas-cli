@@ -33,8 +33,8 @@ USE_WKHTMLTOPDF = not True
 
 TEMP = 'pdpm_py_temp'
 
-HTML_COMMAND = 'pandoc -s -S -t html5 --email-obfuscation=none'
-SLIDES_COMMAND = 'pandoc -s -S -t dzslides --no-highlight \
+HTML_COMMAND = 'pandoc -s -t html5 --email-obfuscation=none'
+SLIDES_COMMAND = 'pandoc -s -t dzslides --no-highlight \
     --email-obfuscation=none -c dzslides.css'
 
 if HTML_FOR_CANVAS:
@@ -58,7 +58,7 @@ if USE_DZSLIDES_TEMPLATE:
     SLIDES_COMMAND += ' --template=pdpm.dzslides'
 
 FONTSIZE = 11
-MARGIN = 0.9
+MARGIN = 1
 PDF_COMMAND = 'pandoc -V fontsize=' + str(FONTSIZE) + \
         'pt -V margin=' + str(MARGIN) + 'in'
 
@@ -90,10 +90,10 @@ def pygmentize(md, out_format, md_is_filename=True, ext='txt'):
         pd = md.split('\n')
 
     if not (ext in ('txt', 'md')):
-        if md_is_filename:
-            pd = ['## ' + md] + ['\n'] + ['~~~' + ext] + \
-                    pd + ['~~~']
-        else:
+        # if md_is_filename:
+        #     pd = ['## ' + md] + ['\n'] + ['~~~' + ext] + \
+        #             pd + ['~~~']
+        # else:
             pd = ['~~~' + ext] + pd + ['~~~']
 
     style_defs_for_pdf = ''

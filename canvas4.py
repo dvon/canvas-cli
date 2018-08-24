@@ -50,7 +50,7 @@ ALL_FILES_IN_FEEDBACK_PDF = False
         # Rather than including one random source code sample in
         # feedback PDF, include all submitted source code files.
 
-NO_FILES_IN_FEEDBACK_PDF = not False
+NO_FILES_IN_FEEDBACK_PDF = False
         # Rather than including one random source code sample in
         # feedback PDF, don't include any.
 
@@ -73,7 +73,8 @@ EXCLUDED_EXTENSIONS = ['txt', 'zip', 'jpg', 'jpeg', 'png', 'docx',
 
 RECOGNIZED_SRC_EXTENSIONS = { '.py' : 'python', '.java': 'java',
         '.c' : 'c', '.pde' : 'processing', '.js' : 'javascript' }
-        # File extensions recognized as being source code.
+        # File extensions recognized as being source code (mapped
+        # to pygments language name).
 
 FILES_TO_ALWAYS_SKIP = ['graphics.py', 'StdOut.java', 'StdIn.java',
         'StdAudio.java', 'StdStats.java', 'StdArrayIO.java',
@@ -86,7 +87,7 @@ FILES_TO_ALWAYS_SKIP = ['graphics.py', 'StdOut.java', 'StdIn.java',
         # Skip these files when choosing source code samples to
         # include in feedback file.
 
-KEEP_FEEDBACK_MD = not False
+KEEP_FEEDBACK_MD = False
         # Don't delete Markdown (.txt) files created when
         # generating feedback PDFs.
 

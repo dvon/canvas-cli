@@ -146,7 +146,7 @@ $endfor$
   % \usepackage{times}
   \usepackage{fourier}                     % Different serif fonts.
   \usepackage[scaled=0.8]{DejaVuSansMono}  % Different monospace fonts.
-  % \usepackage[scaled=0.9,semibold]{sourcecodepro}
+  % \usepackage[scaled=0.9]{sourcecodepro}
 \fi
 \hypersetup{pdfpagemode=UseNone}         % Hide pdf index.
 \renewcommand\UrlFont{\rmfamily}         % Use serif font for links.
@@ -187,6 +187,19 @@ $endfor$
 % For spacing between paragraphs within enumerate.
 \usepackage{enumitem}
 \setlist[enumerate]{parsep=\parskip}
+
+% For (non-single) line spacing, indented paragraphs (except 1st),
+% numbered pages.
+% \usepackage[doublespacing]{setspace}
+% \setlength{\parindent}{2.5em}
+% \pagenumbering{arabic}
+
+% For left-justified (longtable) tables with minimal space
+% between columns.
+$if(tables)$
+\setlength\LTleft{0pt}
+\setlength\tabcolsep{0pt}
+$endif$
 
 %%%%%%%%%%
 

@@ -45,12 +45,16 @@ DELETE_ZIPS = True
         # When a zip file is submitted, delete it (after unzipping
         # and copying the contents to the original zip file's
         # folder).
+        
+PICK_FILE_IN_FEEDBACK_PDF = False
+        # Rather than including one random source code sample in
+        # feedback PDF, allow interactive choice of sample file.
 
 ALL_FILES_IN_FEEDBACK_PDF = False
         # Rather than including one random source code sample in
         # feedback PDF, include all submitted source code files.
 
-NO_FILES_IN_FEEDBACK_PDF = False
+NO_FILES_IN_FEEDBACK_PDF = not False
         # Rather than including one random source code sample in
         # feedback PDF, don't include any.
 
@@ -78,7 +82,7 @@ RECOGNIZED_SRC_EXTENSIONS = { '.py' : 'python', '.java': 'java',
 
 FILES_TO_ALWAYS_SKIP = ['graphics.py', 'StdOut.java', 'StdIn.java',
         'StdAudio.java', 'StdStats.java', 'StdArrayIO.java',
-        'StdDraw.java', 'AA_Tester.java', 'Draw.java',
+        'StdRandom.java', 'StdDraw.java', 'AA_Tester.java', 'Draw.java',
         'DrawListener.java', 'In.java', 'Out.java',
         'Picture.java', 'ChordTest.java', 'ChordFun.java',
         'NoteTest.java', 'Note.java', 'OrangeWindowA.java',
@@ -477,6 +481,16 @@ def get_random_file(assignment, files_to_skip=False):
     if len(filenames) > 0:
         if ALL_FILES_IN_FEEDBACK_PDF:
             filenames.sort()
+
+        elif PICK_FILE_IN_FEEDBACK_PDF:  # 10/4/2018
+            print()
+            
+            for i in range(len(filenames)):
+                print('{}. {}'.format(i + 1, filenames[i]))
+            
+            i = int(input('\nFile number? ')) - 1
+            filenames = [filenames[i]]
+        
         else:
             filenames = [random.choice(filenames)]
 
@@ -594,11 +608,11 @@ def download_submission(course_id, assignment, student_name,
 
                 src = src.replace('\t', '    ')
 
-                if ESCAPE_BAD_CHARS:
-                    src = src.replace('%', '\\%')
-                    # src = src.replace('>', '\\&gt;')
-                    # src = src.replace('>', '\\textgreater')
-                    src = src.replace('&', '\\&')
+                # if ESCAPE_BAD_CHARS:
+                #     src = src.replace('%', '\\%')
+                #     src = src.replace('>', '\\&gt;')
+                #     src = src.replace('>', '\\textgreater')
+                #     src = src.replace('&', '\\&')
 
                 lang = ''
 
@@ -682,9 +696,9 @@ def get_notes(d, notes):
 
             c = notes[d][f][i:j]
 
-            if ESCAPE_BAD_CHARS:
-                c = c.replace('_', '\\_')
-                f = f.replace('_', '\\_')
+            # if ESCAPE_BAD_CHARS:
+            c = c.replace('_', '\\_')
+            f = f.replace('_', '\\_')
 
             if USE_WKHTMLTOPDF:
                 n += '<div class="test_run_comment">' + \
@@ -1012,12 +1026,12 @@ def new_page(filename, slides=False):
         new_event(course_id, title, description)
 
 
-def new_assignment(filename):
+def new_assignment_from_file(filename):
     """
     """
 
     course_id = prompt_for_course_id()
-    group_id = prompt_for_assignment_group_id(course_id)
+    # group_id = prompt_for_assignment_group_id(course_id)
     title = input('Title? (from file): ')
     md = open(filename).read()
 
@@ -1033,6 +1047,14 @@ def new_assignment(filename):
             title = title.replace('_', ' ')
             title = title.replace('-', ' ').title()
 
+    new_assignment(course_id, title, md)
+
+
+def new_assignment(course_id, title, md):
+    """
+    """
+    
+    group_id = prompt_for_assignment_group_id(course_id)
     pg, style_defs = pygmentize(md, 'html', False)
     f = open(TEMP, 'w')
     print(pg, file=f)
@@ -1099,7 +1121,8 @@ def new_assignment(filename):
     elif pts:
         values['assignment[submission_types]'] = 'on_paper'
     elif not update:
-        values['assignment[submission_types]'] = 'none'
+        values['assignment[grading_type]'] = 'not_graded'
+        values['assignment[submission_types]'] = 'not_graded'
 
     data = urllib.parse.urlencode(values).encode('utf-8')
 
@@ -1117,6 +1140,10 @@ def new_event(course_id, title, description, date=''):
     """
     """
 
+    if title.startswith('Read'):
+        new_assignment(course_id, title, description)
+        return
+
     if date == '':
         date = input('Date? (YYYY-MM-DD) (blank): ')
     else:
@@ -1129,11 +1156,16 @@ def new_event(course_id, title, description, date=''):
         start_at = input('Start? (24-hr HH:MM) (blank): ')
 
         if start_at != '':
-            end_at = input('End? (24-hr HH:MM) (start + 1 hr): ')
+            end_at = input(
+                    'End? (24-hr HH:MM) (start + 1 hr): ')
+            # end_at = input('End? (24-hr HH:MM) (HH:50): ')
 
             if end_at == '':
-                end_at = str(int(start_at[:2]) + 1) + start_at[2:]
-
+                end_at = str(int(start_at[:2]) + 1) + \
+                        start_at[2:]
+                # end_at = start_at[:3] + '50'
+                    
+        if start_at != '':
             start_at = date + 'T' + start_at + ':00'
             end_at = date + 'T' + end_at + ':00'
 
@@ -1521,7 +1553,7 @@ if __name__ == '__main__':
         new_page(sys.argv[2], slides=True)
 
     elif sys.argv[1] == '-a':
-        new_assignment(sys.argv[2])
+        new_assignment_from_file(sys.argv[2])
 
     elif sys.argv[1] == '-q':
         p = QuizParser()

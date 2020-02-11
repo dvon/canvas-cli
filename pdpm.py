@@ -58,7 +58,7 @@ if USE_DZSLIDES_TEMPLATE:
     SLIDES_COMMAND += ' --template=pdpm.dzslides'
 
 FONTSIZE = 11
-MARGIN = 1
+MARGIN = 0.9
 PDF_COMMAND = 'pandoc -V fontsize=' + str(FONTSIZE) + \
         'pt -V margin=' + str(MARGIN) + 'in'
 
@@ -223,7 +223,7 @@ def html_canvas_fixes(filename, slides=False):
         '<td style="text-align: right; vertical-align: top">')
 
     # More little fixes.
-    html = html.replace('h3', 'h4')
+    # html = html.replace('h3', 'h4')
     html = html.replace('<code class="url">', '<span class="url">')
     html = html.replace(
         '<pre style="line-height: 125%">',
@@ -242,21 +242,24 @@ def run_pandoc(in_filename, out_filename, out_format,
 
     if out_format == 'slides':
         subprocess.call(SLIDES_COMMAND.split() + options.split() +
-                        [in_filename, '-o', out_filename])
+                        [in_filename, '-o', out_filename, '--metadata',
+                        'pagetitle=' + out_filename])
         
         if canvas_fixes:
             html_canvas_fixes(out_filename, slides=True)
 
     elif out_format == 'html':
         subprocess.call(HTML_COMMAND.split() + options.split() +
-                        [in_filename, '-o', out_filename])
+                        [in_filename, '-o', out_filename, '--metadata',
+                        'pagetitle=' + out_filename])
         
         if canvas_fixes:
             html_canvas_fixes(out_filename)
 
     else:  # pdf
         subprocess.call(PDF_COMMAND.split() + options.split() +
-                        [in_filename, '-o', 'temp.tex'])
+                        [in_filename, '-o', 'temp.tex', '--metadata',
+                        'pagetitle=' + out_filename])
 
         try:
             tex = open('temp.tex').read()

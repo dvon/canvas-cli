@@ -320,7 +320,7 @@ def run_pandoc(in_filename, out_filename, out_format,
         shutil.move('temp.pdf', out_filename)
         os.remove('temp.aux')
         os.remove('temp.log')
-        os.remove('temp.out')
+        # os.remove('temp.out')
 
 
 def run_wkhtmltopdf(input_file, output_file=False):

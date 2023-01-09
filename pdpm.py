@@ -19,7 +19,7 @@ ADD_CIS487_CSS = not True
 MATHJAX_OR_MATHML = True
 DEFAULT_OUTPUT = 'html'
 DEFAULT_STYLE = 'trac'
-PYTHON_STYLE = 'idle'
+PYTHON_STYLE = 'trac' # 'idle'
 C_STYLE = DEFAULT_STYLE
 JAVA_STYLE = DEFAULT_STYLE
 PROCESSING_STYLE = 'default'
@@ -282,8 +282,12 @@ def run_pandoc(in_filename, out_filename, out_format,
 
             # For still newer pandoc version (Arch)...
             tex = tex.replace('{longtable}[c]', '{longtable}[l]')
-            tex = tex.replace('\\toprule', '')
-            tex = tex.replace('\\bottomrule', '')
+            # tex = tex.replace('\\toprule', '')
+            # tex = tex.replace('\\bottomrule', '')
+            
+            # For still newer pandoc version (macOS) ...
+            tex = tex.replace('\\toprule()', '')
+            tex = tex.replace('\\bottomrule()', '')
 
         if style_defs_for_pdf != '':
             i = tex.find('\\begin{document}')
@@ -309,7 +313,7 @@ def run_pandoc(in_filename, out_filename, out_format,
             so_file.close()
             os.remove(TEMP)
 
-        os.remove('temp.tex')  # Move back to preceding else and
+            os.remove('temp.tex')  # Move back to preceding else and
                                # DEBUG_PDFLATEX will mean the tex
                                # file is kept for inspection.
 

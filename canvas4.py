@@ -22,10 +22,10 @@ TEMP = 'canvas4_py_temp'
 PER_PAGE = 100
         # Max results to return from list URLs.
 
-SHOW_UNPUBLISHED_COURSES = not False
+SHOW_UNPUBLISHED_COURSES = False
         #
 
-SHOW_ALL_ASSIGNMENTS = not False
+SHOW_ALL_ASSIGNMENTS = False
         # When prompting user for choice of assignment, show all
         # (not just those with ungraded submissions).
 
@@ -45,6 +45,9 @@ DELETE_ZIPS = True
         # When a zip file is submitted, delete it (after unzipping
         # and copying the contents to the original zip file's
         # folder).
+
+UNZIP = True
+        # If False, ignores DELETE_ZIPS and doesn't delete them.
         
 PICK_FILE_IN_FEEDBACK_PDF = False
         # Rather than including one random source code sample in
@@ -426,7 +429,7 @@ def download_attachment(attachment, student_name='?'):
             f.write(response.read())
             f.close()
 
-            if filename.endswith('.zip'):
+            if UNZIP and filename.endswith('.zip'):
                 unzip(filename, DELETE_ZIPS, True)
 
         except urllib.error.HTTPError:

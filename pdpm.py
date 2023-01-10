@@ -10,6 +10,7 @@ import pygments.formatters
 import pygments.lexers
 
 from processing_lexer import ProcessingLexer
+from pyret_lexer import PyretLexer
 from idle_style import IdleStyle
 
 INLINE_STYLES = True
@@ -136,6 +137,8 @@ def pygmentize(md, out_format, md_is_filename=True, ext='txt'):
                     python3=True)
             elif language == 'processing':
                 lexer = ProcessingLexer()
+            elif language == 'arr' or language == 'pyret':
+                lexer = PyretLexer()
             else:
                 lexer = pygments.lexers.get_lexer_by_name(
                     language)

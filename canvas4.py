@@ -22,8 +22,9 @@ TEMP = 'canvas4_py_temp'
 PER_PAGE = 100
         # Max results to return from list URLs.
 
-SHOW_UNPUBLISHED_COURSES = False
-        #
+SHOW_UNPUBLISHED_COURSES = not False
+        # Show all courses for term specified in canvas_token.py,
+        # not just those that are published.
 
 SHOW_ALL_ASSIGNMENTS = False
         # When prompting user for choice of assignment, show all
@@ -47,7 +48,8 @@ DELETE_ZIPS = True
         # folder).
 
 UNZIP = True
-        # If False, ignores DELETE_ZIPS and doesn't delete them.
+        # If False, leaves zip files unzipped.  (Also ignores
+        # DELETE_ZIPS.)
         
 PICK_FILE_IN_FEEDBACK_PDF = False
         # Rather than including one random source code sample in
@@ -57,7 +59,7 @@ ALL_FILES_IN_FEEDBACK_PDF = False
         # Rather than including one random source code sample in
         # feedback PDF, include all submitted source code files.
 
-NO_FILES_IN_FEEDBACK_PDF = not False
+NO_FILES_IN_FEEDBACK_PDF = False
         # Rather than including one random source code sample in
         # feedback PDF, don't include any.
 
@@ -79,18 +81,16 @@ EXCLUDED_EXTENSIONS = ['txt', 'zip', 'jpg', 'jpeg', 'png', 'docx',
         # random source code sample to include in feedback file.
 
 RECOGNIZED_SRC_EXTENSIONS = { '.py' : 'python', '.java': 'java',
-        '.c' : 'c', '.pde' : 'processing', '.js' : 'javascript' }
+        '.c' : 'c', '.pde' : 'processing', '.js' : 'javascript',
+        '.arr': 'txt' }
         # File extensions recognized as being source code (mapped
         # to pygments language name).
 
 FILES_TO_ALWAYS_SKIP = ['graphics.py', 'StdOut.java', 'StdIn.java',
         'StdAudio.java', 'StdStats.java', 'StdArrayIO.java',
-        'StdRandom.java', 'StdDraw.java', 'AA_Tester.java', 'Draw.java',
+        'StdRandom.java', 'StdDraw.java', 'Draw.java',
         'DrawListener.java', 'In.java', 'Out.java',
-        'Picture.java', 'ChordTest.java', 'ChordFun.java',
-        'NoteTest.java', 'Note.java', 'OrangeWindowA.java',
-        'OrangeWindowB.java', 'ComplexNumberTest.java',
-        'MandelbrotVisualizationA.java', 'csapp.c', 'csapp.h']
+        'Picture.java', 'csapp.c', 'csapp.h']
         # Skip these files when choosing source code samples to
         # include in feedback file.
 

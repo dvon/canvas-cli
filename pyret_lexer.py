@@ -11,7 +11,6 @@ class PyretLexer(RegexLexer):
 
     tokens = {
         'root': [
-
             (r'(!|->|(?<!<)=>|\[|\]|{|}|:\s|;|,)', Punctuation),
             (r'(\(|\)|\.|::|:=| \^ | \+ | - | \/ | \*| >= | <= |'
              r' <> | == | <=> | =~ |=|>|<)', Operator),
@@ -31,23 +30,23 @@ class PyretLexer(RegexLexer):
             (r'(?<!-)(\b|^)(true|false|nothing)(?!-)(\b|$)', Keyword.Constant),
             (r"'[^']*'", String),
             (r'"[^"]*"', String),
-            (r'```', String, 'sml'),
+            (r'```', String, 'multiline string'),
             (r"'[^']*$", Error),
             (r'"[^"]*$', Error),
             (r'(?<![a-zA-Z0-9_-])-?[0-9]+([/.][0-9]+)?', Number),
             (r'(?<![a-zA-Z0-9_-])~-?[0-9]+(\.[0-9]+)?', Number.Float),
             (r'#([^|].*)?$', Comment.Single),
-            (r'#\|', Comment.Multiline, 'cml'),
+            (r'#\|', Comment.Multiline, 'multiline comment'),
 
             (r'[^\s]', Text),
             (r'\s+', Whitespace)
         ],
-        'sml': [
+        'multiline string': [
             (r'[^`]+', String),
             (r'```', String, '#pop'),
             (r'`', String)
         ],
-        'cml': [
+        'multiline comment': [
             (r'[^#|]+', Comment.Multiline),
             (r'#\|', Comment.Multiline, '#push'),
             (r'\|#', Comment.Multiline, '#pop'),

@@ -24,6 +24,7 @@ PYTHON_STYLE = 'trac' # 'idle'
 C_STYLE = DEFAULT_STYLE
 JAVA_STYLE = DEFAULT_STYLE
 PROCESSING_STYLE = 'default'
+PYRET_STYLE = DEFAULT_STYLE
 PYTHON3 = True
 USE_PDF_TEMPLATE = True
 USE_DZSLIDES_TEMPLATE = not True
@@ -128,6 +129,8 @@ def pygmentize(md, out_format, md_is_filename=True, ext='txt'):
                 style = JAVA_STYLE
             elif language == 'processing':
                 style = PROCESSING_STYLE
+            elif language == 'pyret':
+                style = PYRET_STYLE
             else:
                 style = DEFAULT_STYLE
 

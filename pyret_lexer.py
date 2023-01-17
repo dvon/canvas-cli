@@ -50,8 +50,10 @@ class PyretLexer(RegexLexer):
             (r'(?<=\s)(\^|\+|-|\*|/|<=>|<=|>=|==|=~|<>|<|>|=>)'
              r'(?=\s)', Operator),
 
-            (r'(?<!-)(\b|^)-?\d+([/.]\d+)?', Number),
-            (r'(?<!-)(\b|^)~-?\d+([/.]\d+)?', Number.Float),
+            (r'(?<![a-zA-Z0-9_-])-?\d+([/.]\d+)?', Number),
+            (r'(?<![a-zA-Z0-9_-])~-?\d+(\.\d+)?', Number.Float),
+            # (r'(?<!-)(\b|^)-?\d+([/.]\d+)?', Number),
+            # (r'(?<!-)(\b|^)~-?\d+(\.\d+)?', Number.Float),
                 # Number.Float used for Roughnum; might be
                 # assigned a different color than Number.
 

@@ -209,6 +209,10 @@ def html_canvas_fixes(filename, slides=False):
     if not slides:
         html = html[html.find('<body>') + 6:html.find('</body>')]
 
+    # Get around Canvas "feature" that strips font-weight: bold.
+    html = html.replace('<span style="font-weight: bold">',
+        '<span style="font: bold 100% \'Source Code Pro\', monospace;">')
+
     # Get rid of code tags.  (Ideally pygmentize above would
     # catch these if followed by, e.g., {.python}.)
     html = html.replace(

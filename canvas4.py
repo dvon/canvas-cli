@@ -82,7 +82,7 @@ EXCLUDED_EXTENSIONS = ['txt', 'zip', 'jpg', 'jpeg', 'png', 'docx',
 
 RECOGNIZED_SRC_EXTENSIONS = { '.py' : 'python', '.java': 'java',
         '.c' : 'c', '.pde' : 'processing', '.js' : 'javascript',
-        '.arr': 'txt' }
+        '.arr': 'pyret' }
         # File extensions recognized as being source code (mapped
         # to pygments language name).
 
@@ -252,11 +252,6 @@ def get_students(course_id):
     students = {}
 
     for student in response:
-
-        #### Because he edited his sortable name...
-        if student['sortable_name'] == '.Nathan Chan':
-            student['sortable_name'] = 'Chan, Nathan'
-
         students[str(student['id'])] = student['sortable_name']
 
     return students

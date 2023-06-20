@@ -26,7 +26,7 @@ SHOW_UNPUBLISHED_COURSES = not False
         # Show all courses for term specified in canvas_token.py,
         # not just those that are published.
 
-SHOW_ALL_ASSIGNMENTS = False
+SHOW_ALL_ASSIGNMENTS = not False
         # When prompting user for choice of assignment, show all
         # (not just those with ungraded submissions).
 
@@ -59,7 +59,7 @@ ALL_FILES_IN_FEEDBACK_PDF = False
         # Rather than including one random source code sample in
         # feedback PDF, include all submitted source code files.
 
-NO_FILES_IN_FEEDBACK_PDF = False
+NO_FILES_IN_FEEDBACK_PDF = not False
         # Rather than including one random source code sample in
         # feedback PDF, don't include any.
 

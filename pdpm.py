@@ -323,7 +323,7 @@ def run_pandoc(in_filename, out_filename, out_format,
             so_file.close()
             os.remove(TEMP)
 
-            os.remove('temp.tex')  # Move back to preceding else and
+        os.remove('temp.tex')  # Move back to preceding else and
                                # DEBUG_PDFLATEX will mean the tex
                                # file is kept for inspection.
 

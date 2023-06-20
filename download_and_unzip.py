@@ -6,7 +6,7 @@ from canvas_token import TERM, SITE, TOKEN
         # canvas_token.py, in same folder, should look like:
         # TERM = 'Spring 2017'
         # SITE = 'https://messiah.instructure.com'
-        # TOKEN = [Developer token generated from Canvas...]
+        # TOKEN = [Developer token generated from Canvas ...]
 
 import json
 import os

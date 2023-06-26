@@ -1106,7 +1106,7 @@ def new_assignment(course_id, title, md):
         values['assignment[grading_type]'] = 'points'
         values['assignment[points_possible]'] = pts
 
-    if due_at != 'T:00':
+    if not due_at.endswith('T:00'):
         values['assignment[due_at]'] = due_at
 
     if exts != '':

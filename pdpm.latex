@@ -425,7 +425,7 @@ $endif$
 \else
   % \usepackage{times}
   \usepackage{fourier}                     % Different serif fonts.
-  \usepackage[scaled=0.9]{DejaVuSansMono}  % Different monospace fonts.
+  \usepackage[scaled=0.75]{DejaVuSansMono}  % Different monospace fonts.
   % \usepackage[scaled=0.9]{sourcecodepro}
 \fi
 \hypersetup{pdfpagemode=UseNone}         % Hide pdf index.

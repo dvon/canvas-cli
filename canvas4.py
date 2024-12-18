@@ -26,7 +26,7 @@ SHOW_UNPUBLISHED_COURSES = not False
         # Show all courses for term specified in canvas_token.py,
         # not just those that are published.
 
-SHOW_ALL_ASSIGNMENTS = not False
+SHOW_ALL_ASSIGNMENTS = False
         # When prompting user for choice of assignment, show all
         # (not just those with ungraded submissions).
 
@@ -51,7 +51,7 @@ UNZIP = True
         # If False, leaves zip files unzipped.  (Also ignores
         # DELETE_ZIPS.)
         
-PICK_FILE_IN_FEEDBACK_PDF = False
+PICK_FILE_IN_FEEDBACK_PDF = not False
         # Rather than including one random source code sample in
         # feedback PDF, allow interactive choice of sample file.
 
@@ -59,7 +59,7 @@ ALL_FILES_IN_FEEDBACK_PDF = False
         # Rather than including one random source code sample in
         # feedback PDF, include all submitted source code files.
 
-NO_FILES_IN_FEEDBACK_PDF = not False
+NO_FILES_IN_FEEDBACK_PDF = False
         # Rather than including one random source code sample in
         # feedback PDF, don't include any.
 
@@ -944,7 +944,8 @@ def new_page(filename, slides=False):
             title = title.replace('-', ' ').title()
 
         if slides:
-            pg, style_defs = pygmentize(md, 'html', False)
+            md_slides = md[md.find('##'):]
+            pg, style_defs = pygmentize(md_slides, 'html', False)
             t = open(TEMP, 'w')
             print(pg, file=t)
             t.close()
@@ -958,9 +959,10 @@ def new_page(filename, slides=False):
             file_id = upload(slides_filename, url, 'slides')
             slides_url = '{}/courses/{}/files/{}/download'.format(
                     SITE, course_id, file_id)
-            md = '(As slides: [{}]({}))\n\n'.format(
+            md = md[:md.find('##')] + \
+                    '\n\\\n(View notes below as slides: [{}]({}))\n\n'.format(
                     os.path.basename(slides_filename),
-                    slides_url) + md
+                    slides_url) + md_slides
 
         pg, style_defs = pygmentize(md, 'html', False)
 

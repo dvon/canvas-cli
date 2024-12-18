@@ -30,7 +30,7 @@ USE_PDF_TEMPLATE = True
 USE_DZSLIDES_TEMPLATE = not True
 DEBUG_PDFLATEX = not False
 XELATEX = False
-DELETE_HLINES = True
+DELETE_HLINES = not True
 USE_WKHTMLTOPDF = not True
 
 TEMP = 'pdpm_py_temp'
@@ -60,7 +60,7 @@ if USE_DZSLIDES_TEMPLATE:
     SLIDES_COMMAND += ' --template=pdpm.dzslides'
 
 FONTSIZE = 11
-MARGIN = 0.9
+MARGIN = 0.8
 PDF_COMMAND = 'pandoc -V fontsize=' + str(FONTSIZE) + \
         'pt -V margin=' + str(MARGIN) + 'in'
 

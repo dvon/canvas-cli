@@ -574,7 +574,8 @@ def download_submission(course_id, assignment, student_name,
             download_attachment(attachment, student_name)
 
         f = open("{} ({}).txt".format(student_name,
-                assignment['name']).replace('/', '\\'), 'w')
+                # assignment['name']).replace('/', '\\'), 'w')
+                assignment['name']).replace('/', '-'), 'w')
 
         if late:
             print('SUBMITTED LATE\n\n', file=f)
@@ -731,6 +732,7 @@ def make_feedback_pdf(d, notes=False):
         if f.startswith(last_name) and f.endswith('.txt'):
             print('Making feedback pdf ({})...'.format(
                     f[:f.rfind('.')]))
+            fpdf = f.replace('.txt', '.pdf').replace('\\', '-')
 
             if not '_notes.txt' in f:
                 if USE_WKHTMLTOPDF:
@@ -775,7 +777,7 @@ def make_feedback_pdf(d, notes=False):
                 if not KEEP_FEEDBACK_HTML:
                     os.remove(g)
             else:
-                run_pandoc(TEMP, f.replace('.txt', '.pdf'),
+                run_pandoc(TEMP, fpdf, # f.replace('.txt', '.pdf'),
                         'pdf', False, style_defs)
 
             if KEEP_FEEDBACK_MD and not os.path.exists(
@@ -788,14 +790,12 @@ def make_feedback_pdf(d, notes=False):
             os.remove(TEMP)
 
             if MOVE_PDFS_UP_DIR:
-                g = f.replace('.txt', '.pdf')
+                g = fpdf # f.replace('.txt', '.pdf')
 
-                if OVERWRITE_PDFS and \
-                        os.path.exists('../' + g):
+                if OVERWRITE_PDFS and os.path.exists('../' + g):
                     os.remove('../' + g)
 
-                shutil.move(f.replace('.txt', '.pdf'),
-                        '..')
+                shutil.move(g, '..')
 
     os.chdir('..')
 
@@ -818,7 +818,7 @@ def make_feedback_pdfs():
             make_feedback_pdf(d, notes)
 
 
-def upload(filename, url, folder=False, timestamp_folder=False):
+def upload(filename, url, folder=False):
     """
     Upload a file to Canvas.  File type will be guessed (by Canvas
     server) based on extension.  Canvas API documentation
@@ -832,16 +832,14 @@ def upload(filename, url, folder=False, timestamp_folder=False):
     basename = os.path.basename(filename)
     values = { 'name' : basename }
 
+    if '/' in filename:
+        if folder:
+            folder += '/' + filename[:filename.find('/')]
+        else:
+            folder = filename[:filename.find('/')]
+
     if folder:
         values['parent_folder_path'] = folder
-
-        if timestamp_folder:
-            d = datetime.datetime.now()
-            folder += '/{}-{:02}-{:02}'.format(d.year, d.month,
-                    d.day)
-            folder += 'T{:02}:{:02}:{:02}'.format(d.year,
-                    d.minute, d.second)
-            folder += '_' + basename
 
     data = urllib.parse.urlencode(values).encode('utf-8')
     request = urllib.request.Request(url, data)
@@ -887,7 +885,8 @@ def upload_feedback(course_id, assignment, student_name,
     """
 
     filename = '{} ({}).pdf'.format(student_name,
-            assignment['name']).replace('/', '\\')
+            # assignment['name']).replace('/', '\\')
+            assignment['name']).replace('/', '-')
 
     if os.path.exists(filename):
         print('Uploading feedback PDF ({})...'.format(
@@ -931,7 +930,7 @@ def new_page(filename, slides=False):
     course_id = prompt_for_course_id()
     md = open(filename).read()
 
-    if filename.endswith('.txt'):
+    if filename.endswith('.txt') or filename.endswith('.md'):
         first_line = md[:md.find('\n')]
 
         if first_line.startswith('#'):
@@ -960,15 +959,14 @@ def new_page(filename, slides=False):
             slides_url = '{}/courses/{}/files/{}/download'.format(
                     SITE, course_id, file_id)
             md = md[:md.find('##')] + \
-                    '\n\\\n(View notes below as slides: [{}]({}))\n\n'.format(
-                    os.path.basename(slides_filename),
-                    slides_url) + md_slides
+                    '\n\\\n(Click [here]({})'.format(slides_url) + \
+                    ' to view notes below as slides.)\n\n' + md_slides
 
         pg, style_defs = pygmentize(md, 'html', False)
 
     else:  # Assume file is a source code example.
         url = '{}/api/v1/courses/{}/files'.format(SITE, course_id)
-        file_id = upload(filename, url, 'examples', True)
+        file_id = upload(filename, url, 'examples')
         file_url = '{}/courses/{}/files/{}/download'.format(
                 SITE, course_id, file_id)
         title = os.path.basename(filename)
@@ -1088,7 +1086,8 @@ def new_assignment(course_id, title, md):
     update = False
 
     for assignment in response:
-        if assignment['name'] == title.replace('/', '\\'):
+        # if assignment['name'] == title.replace('/', '\\'):
+        if assignment['name'] == title.replace('/', '-'):
             assignment_id = assignment['id']
             update = True
 
